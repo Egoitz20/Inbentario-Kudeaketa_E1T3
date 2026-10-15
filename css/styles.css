@@ -1,0 +1,109 @@
+/* Aldagaiak */
+:root {
+    --printzipala: #5C5CFF;
+    --navbar: #8A8AFF;
+    --zuria: #FFFFFF;
+}
+
+/* Orokorrak */
+body {
+    margin: 0px;
+    padding: 0px;
+    display: grid;
+    text-align: center;
+}
+
+/* Login */
+.login {
+    display: grid;
+    justify-items: center;
+    max-width: fit-content;
+    border: 2px solid black;
+    border-radius: 4px;
+    padding: 4px;
+    margin: 30px auto;
+}
+
+.titulua {
+    display: grid;
+    grid-auto-flow: column;
+    align-items: center;
+    padding: 10px;
+    background-color: var(--printzipala);
+    color: var(--zuria);
+    border: none;
+    border-radius: 4px;
+}
+
+.formLogin {
+    display: grid;
+    justify-items: center;
+    margin: 10px;
+}
+
+.inputs {
+    border-style: none;
+    background-color: rgb(219, 219, 219);
+    border-radius: 4px;
+    padding: 4px;
+}
+
+#sartu {
+    border: none;
+    background-color: var(--printzipala);
+    color: var(--zuria);
+    font-weight: bold;
+    padding: 4px;
+    border-radius: 8px;
+}
+
+/* Hasiera Pantaila B */
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: var(--navbar);
+}
+
+ul li a {
+    display: block;
+    color: var(--zuria);
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+ul li a:hover {
+    background-color: var(--printzipala);
+}
+
+.nav {
+    display: grid;
+    grid-auto-flow: column;
+    align-items: center;
+    padding: 2px;
+}
+
+#logout {
+    background-color: #FFFFFF;
+    border-radius: 100px;
+    padding: 2px;
+}
+
+
+/* Admin */
+.admin {
+    margin: 10px;
+    padding: 10px;
+    display: grid;
+    grid-auto-flow: column;
+    align-content: start;
+    justify-content: start;
+    align-items: center;
+}
+
+.adminErab {
+    background-color: grey;
+    border-radius: 4px;
+}
