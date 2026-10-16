@@ -2,60 +2,112 @@
 :root {
     --printzipala: #5C5CFF;
     --navbar: #8A8AFF;
+    --grisa: #989898;
+    --grisa2: #D9D9D9;
     --zuria: #FFFFFF;
 }
 
 /* Orokorrak */
-body {
-    margin: 0px;
-    padding: 0px;
-    display: grid;
-    text-align: center;
+.bodyLogin {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--zuria);
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 /* Login */
 .login {
     display: grid;
+    align-content: start;
     justify-items: center;
-    max-width: fit-content;
+    min-height: 370px;
+    box-sizing: border-box;
+    padding: 6px;
     border: 2px solid black;
-    border-radius: 4px;
-    padding: 4px;
-    margin: 30px auto;
+    border-radius: 8px;
+    background-color: var(--zuria);
 }
 
+/* Header */
 .titulua {
     display: grid;
-    grid-auto-flow: column;
+    grid-template-columns: 90px 1fr;
     align-items: center;
-    padding: 10px;
+    justify-items: center;
+    gap: 14px;
+    width: 100%;
+    min-height: 90px;
+    box-sizing: border-box;
+    padding: 14px;
     background-color: var(--printzipala);
     color: var(--zuria);
-    border: none;
-    border-radius: 4px;
+    border-radius: 6px;
 }
 
+/* Logoa */
+.logo {
+    width: 80px;
+    height: 60px;
+    object-fit: contain;
+}
+
+/* Titulua */
+.titulua h1 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    white-space: nowrap;
+}
+
+/* Formularioa */
 .formLogin {
     display: grid;
     justify-items: center;
-    margin: 10px;
+    gap: 40px;
+    width: 100%;
+    margin-top: 50px;
+    margin-bottom: 50px;
 }
 
+.formLogin>div {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+/* Inputs */
 .inputs {
-    border-style: none;
-    background-color: rgb(219, 219, 219);
-    border-radius: 4px;
-    padding: 4px;
+    border: none;
+    background-color: var(--grisa2);
+    border-radius: 8px;
+    padding: 5px 10px;
+    font-size: 18px;
 }
 
+/* Sartu Botoia */
 #sartu {
     border: none;
     background-color: var(--printzipala);
     color: var(--zuria);
+    font-size: 20px;
     font-weight: bold;
-    padding: 4px;
-    border-radius: 8px;
+    padding: 5px 15px;
+    border-radius: 12px;
+    cursor: pointer;
 }
+
+#sartu:hover {
+    background-color: var(--navbar);
+}
+
+#sartu:active {
+    transform: scale(0.96);
+}
+
 
 /* Hasiera Pantaila B */
 ul {
@@ -72,21 +124,24 @@ ul li a {
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
+    font-weight: bold;
 }
 
 ul li a:hover {
     background-color: var(--printzipala);
+    border-radius: 8px;
 }
 
 .nav {
     display: grid;
     grid-auto-flow: column;
     align-items: center;
-    padding: 2px;
+    padding: 6px;
+    gap: 10px;
 }
 
 #logout {
-    background-color: #FFFFFF;
+    background-color: var(--zuria);
     border-radius: 100px;
     padding: 2px;
 }
@@ -104,6 +159,12 @@ ul li a:hover {
 }
 
 .adminErab {
-    background-color: grey;
+    background-color: var(--grisa);
     border-radius: 4px;
+}
+
+.formDiv {
+    display: grid;
+    justify-items: center;
+    padding: 6px;
 }

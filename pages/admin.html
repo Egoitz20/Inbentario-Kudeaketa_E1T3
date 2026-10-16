@@ -18,8 +18,31 @@
             <h4 class="adminErab">admin</h4>
         </div>
     </div>
-    <div>
-        <p>formularioa</p>
+    <div class="formDiv">
+        <div>
+            <img class="userBerria" src="../img/user-plus.svg">
+            <h2>SORTU ERABILTZAILE BERRIA</h2>
+        </div>
+        <div>
+            <form>
+                <div>
+                    <p>Erabiltzaile izena</p>
+                    <input class="inputs" type="text" id="erab" name="erab">
+                </div>
+                <div>
+                    <p>Pasahitza</p>
+                    <input class="inputs" type="password" id="pas" name="pas">
+                </div>
+                <p>Rola</p>
+                <select id="erabMota" name="erabMota" class="select">
+                    <option value="user">USER</option>
+                    <option value="admin">ADMIN</option>
+                </select>
+                <div>
+                    <button type="button" id="sortu">SORTU</button>
+                </div>
+            </form>
+        </div>
     </div>
 </body>
 
