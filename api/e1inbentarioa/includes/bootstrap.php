@@ -22,7 +22,7 @@ $jatorria = $_SERVER['HTTP_ORIGIN'] ?? '';
 if (in_array($jatorria, BAIMENDUTAKO_JATORRIAK, true)) {
     header('Access-Control-Allow-Origin: ' . $jatorria);
     header('Access-Control-Allow-Credentials: true');
-    header('Access-Control-Allow-Headers: Content-Type');
+    header('Access-Control-Allow-Headers: Content-Type, Authorization');
     header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
     header('Access-Control-Max-Age: 600');
 }

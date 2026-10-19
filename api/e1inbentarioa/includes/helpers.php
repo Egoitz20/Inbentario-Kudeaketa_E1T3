@@ -106,9 +106,9 @@ function saioaHasi(): void
         session_set_cookie_params([
             'lifetime' => 0,
             'path'     => '/',
-            'secure'   => !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off',
-            'httponly' => true,   // JavaScript no puede leer la cookie
-            'samesite' => 'Lax',
+            'secure'   => true,
+            'httponly' => true,
+            'samesite' => 'None',
         ]);
         session_start();
     }
