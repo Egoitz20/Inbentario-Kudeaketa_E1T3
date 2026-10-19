@@ -149,22 +149,124 @@ ul li a:hover {
 
 /* Admin */
 .admin {
-    margin: 10px;
-    padding: 10px;
+    margin: 20px 20px;
     display: grid;
-    grid-auto-flow: column;
-    align-content: start;
+    grid-template-columns: 120px 350px;
+    column-gap: 30px;
+    align-items: start;
     justify-content: start;
-    align-items: center;
 }
 
-.adminErab {
-    background-color: var(--grisa);
-    border-radius: 4px;
+img.adminErab {
+    height: 100px;
+    background-color: var(--grisa2);
+    border-radius: 16px;
 }
 
+.admin div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 30px;
+}
+
+h2.adminErab {
+    width: 100%;
+    margin: 0;
+    padding: 8px;
+    background-color: var(--grisa2);
+    border-radius: 8px;
+}
+
+h4.adminErab {
+    width: 50%;
+    margin: 0;
+    padding: 8px;
+    text-align: center;
+    background-color: var(--grisa2);
+    border-radius: 8px;
+    font-size: 18px;
+}
+
+/* Formulario */
 .formDiv {
     display: grid;
     justify-items: center;
-    padding: 6px;
+    align-content: start;
+    padding: 40px;
+}
+
+.adminTitulua {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 22px;
+}
+
+.userBerria {
+    width: 30px;
+    height: 30px;
+}
+
+.formDiv h2 {
+    margin: 0;
+    font-weight: bold;
+}
+
+.formDiv form {
+    width: 300px;
+    display: grid;
+    gap: 20px;
+}
+
+.formDiv p {
+    margin: 0 0 16px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.inputsAdmin {
+    display: block;
+    width: 100%;
+    height: 39px;
+    box-sizing: border-box;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--grisa2);
+    outline-color: var(--printzipala);
+}
+
+.select {
+    display: block;
+    width: 100px;
+    height: 40px;
+    padding: 0 12px;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--grisa2);
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#sortu {
+    display: block;
+    margin: 34px 0 0 auto;
+    border: none;
+    background-color: var(--printzipala);
+    color: var(--zuria);
+    font-size: 20px;
+    font-weight: bold;
+    padding: 5px 15px;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+#sortu:hover {
+    background-color: var(--navbar);
+}
+
+#sortu:active {
+    transform: scale(0.96);
 }

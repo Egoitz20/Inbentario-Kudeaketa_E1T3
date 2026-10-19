@@ -1,50 +1,61 @@
 'use strict'
+import { apiUrl } from "./config.js";
 
 document.getElementById("sartu").addEventListener("click", saioaHasi);
 
 //Fetch erabiltzaileak
 async function saioaHasi() {
-    //let apiUrl = "https://random-word-api.herokuapp.com/word?lang=es";
+    const loginUrl = apiUrl + "auth.php?action=login";
+
+    const username = document.getElementById("erab").value;
+    const pasahitza = document.getElementById("pas").value;
 
     try {
-        //let respuesta = await fetch(apiUrl);
-        //let resultado = await respuesta.json();
+            const respuesta = await fetch(
+                loginUrl,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        username,
+                        pasahitza
+                    }),
+                    credentials: "include"
+                }
+            );
 
-        let erab = "admin";
-        let pas = "ikasle123";
-        let rola = "admin";
-        let erabIndex = document.getElementById("erab").value;
-        let pasIndex = document.getElementById("pas").value;
+            let resultado = await respuesta.json();
 
-        /*
-        console.log(erab);
-        console.log(pas);
-        console.log(erabIndex);
-        console.log(pasIndex);
-        */
-
-        if (erab === erabIndex && pas === pasIndex) {
-            if (rola === "admin") {
-                window.location.href = "pages/ikusiB.html";
+            if (respuesta.ok && resultado.success === true) {
+                if (resultado.rol === "admin") {
+                    window.location.href = "pages/admin/hasieraAdmin.html";
+                } else {
+                    window.location.href = "pages/hasiera.html";
+                }
             } else {
-                window.location.href = "pages/ikusiB.html";
+                alert("Erabiltzailea edo/eta pasahitza okerrak dira.");
             }
-        } else {
-            alert("Erabiltzailea edo/eta pasahitza okerrak dira.");
-        }
+
+        // let erab2 = "admin";
+        // let pas2 = "ikasle123";
+        // let rola2 = "admin";
+        // let erabIndex = document.getElementById("erab").value;
+        // let pasIndex = document.getElementById("pas").value;
+
+        // if (erab2 === erabIndex && pas2 === pasIndex) {
+        //     if (rola2 === "admin") {
+        //         window.location.href = "pages/admin/hasieraAdmin.html";
+        //     } else {
+        //         window.location.href = "pages/hasiera.html";
+        //     }
+        // } else {
+        //     alert("Erabiltzailea edo/eta pasahitza okerrak dira.");
+        // }
 
     } catch (error) {
         console.log(error);
         alert("Errorea login egiterakoan.");
     }
 }
-
-//Fetch kategoriak
-
-//Fetch baliabideak
-
-//Fetch gailuak
-
-//Fetch gelak
-
-//Fetch mugimenduak
