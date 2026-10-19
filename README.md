@@ -41,6 +41,7 @@ Aplikazioak egitura antolatu bat izango du, mantentze-lanak errazteko, eskalagar
 ```text
 /
 ├── index.html
+├── api/
 ├── pages/
 │   ├── js/
 │   └── styles/
