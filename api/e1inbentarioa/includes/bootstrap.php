@@ -18,15 +18,15 @@ spl_autoload_register(function (string $klasea): void {
 // ---------- CORS ----------
 // Permite que el frontend (otro origen) llame a la API usando cookies.
 // Solo se aceptan los orígenes de BAIMENDUTAKO_JATORRIAK (nunca "*").
-$jatorria = $_SERVER['HTTP_ORIGIN'] ?? '';
-if (in_array($jatorria, BAIMENDUTAKO_JATORRIAK, true)) {
-    header('Access-Control-Allow-Origin: ' . $jatorria);
-    header('Access-Control-Allow-Credentials: true');
-    header('Access-Control-Allow-Headers: Content-Type');
-    header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
-    header('Access-Control-Max-Age: 600');
-}
-header('Vary: Origin');
+// $jatorria = $_SERVER['HTTP_ORIGIN'] ?? '';
+// if (in_array($jatorria, BAIMENDUTAKO_JATORRIAK, true)) {
+//     header('Access-Control-Allow-Origin: ' . $jatorria);
+//     header('Access-Control-Allow-Credentials: true');
+//     header('Access-Control-Allow-Headers: Content-Type');
+//     header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
+//     header('Access-Control-Max-Age: 600');
+// }
+// header('Vary: Origin');
 
 // Antes de enviar JSON entre orígenes distintos, el navegador hace una petición OPTIONS de prueba
 if (($_SERVER['REQUEST_METHOD'] ?? '') === 'OPTIONS') {
