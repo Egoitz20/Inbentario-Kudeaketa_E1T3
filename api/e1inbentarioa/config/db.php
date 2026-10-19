@@ -10,12 +10,12 @@ const DB_PASAHITZA     = 'ikasle123';
 const GELA_ALMAZENA = 'Almacén';
 
 // Orígenes del frontend autorizados a llamar a la API con cookies (CORS)
-// const BAIMENDUTAKO_JATORRIAK = [
-//     'http://localhost',
-//     'http://localhost:5500',
-//     'http://127.0.0.1:5500',
-//     'https://www.talde3.edu',
-// ];
+const BAIMENDUTAKO_JATORRIAK = [
+    'http://localhost',
+    'http://localhost:5500',
+    'http://127.0.0.1:5500',
+    'https://www.talde3.edu',
+];
 
 function datuBasea(): PDO
 {
