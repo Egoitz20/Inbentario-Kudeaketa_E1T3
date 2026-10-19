@@ -1,0 +1,1047 @@
+{
+  "info": {
+    "_postman_id": "3d462f07-9b55-4b51-9239-859c0f9a7fb9",
+    "name": "Inbentarioa API",
+    "description": "CRUD completo de la API de inventario. 1) Ajusta la variable baseUrl. 2) Ejecuta Auth > Login (admin) primero: Postman guarda la cookie de sesión.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "51440242",
+    "_collection_link": "https://go.postman.co/collection/51440242-3d462f07-9b55-4b51-9239-859c0f9a7fb9?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login (admin)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Login correcto', () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"admin\",\n  \"pasahitza\": \"admin\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth.php?action=login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth.php"
+              ],
+              "query": [
+                {
+                  "key": "action",
+                  "value": "login"
+                }
+              ]
+            },
+            "description": "Guarda la cookie de sesión automáticamente (PHPSESSID)."
+          },
+          "response": []
+        },
+        {
+          "name": "Quién soy (me)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/auth.php?action=me",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth.php"
+              ],
+              "query": [
+                {
+                  "key": "action",
+                  "value": "me"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/auth.php?action=logout",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth.php"
+              ],
+              "query": [
+                {
+                  "key": "action",
+                  "value": "logout"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Erabiltzaileak (solo admin)",
+      "item": [
+        {
+          "name": "Listar todos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/erabiltzaileak.php",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "erabiltzaileak.php"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Obtener uno",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/erabiltzaileak.php?id={{id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "erabiltzaileak.php"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "{{id}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Crear",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"tecnico1\",\n  \"pasahitza\": \"clave1234\",\n  \"rol\": \"user\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/erabiltzaileak.php",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "erabiltzaileak.php"
+              ]
+            },
+            "description": "Solo admin"
+          },
+          "response": []
+        },
+        {
+          "name": "Editar",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"rol\": \"admin\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/erabiltzaileak.php?id={{id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "erabiltzaileak.php"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "{{id}}"
+                }
+              ]
+            },
+            "description": "Solo admin. Campos opcionales: username, rol, pasahitza (8-72 caracteres)."
+          },
+          "response": []
+        },
+        {
+          "name": "Borrar",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/erabiltzaileak.php?id={{id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "erabiltzaileak.php"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "{{id}}"
+                }
+              ]
+            },
+            "description": "Solo admin. 409 si tiene registros relacionados."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Kategoriak",
+      "item": [
+        {
+          "name": "Listar todos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/kategoriak.php",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "kategoriak.php"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Obtener uno",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/kategoriak.php?id={{id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "kategoriak.php"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "{{id}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Crear",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"izena\": \"Tablet\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/kategoriak.php",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "kategoriak.php"
+              ]
+            },
+            "description": "Solo admin"
+          },
+          "response": []
+        },
+        {
+          "name": "Editar",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"izena\": \"Tablet reacondicionada\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/kategoriak.php?id={{id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "kategoriak.php"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "{{id}}"
+                }
+              ]
+            },
+            "description": "Solo admin"
+          },
+          "response": []
+        },
+        {
+          "name": "Borrar",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/kategoriak.php?id={{id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "kategoriak.php"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "{{id}}"
+                }
+              ]
+            },
+            "description": "Solo admin. 409 si tiene registros relacionados."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Gelak",
+      "item": [
+        {
+          "name": "Listar todos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/gelak.php",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "gelak.php"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Obtener uno",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/gelak.php?id={{id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "gelak.php"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "{{id}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Crear",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"izena\": \"Aula 1.1\",\n  \"taldea\": \"DAW1\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/gelak.php",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "gelak.php"
+              ]
+            },
+            "description": "Solo admin"
+          },
+          "response": []
+        },
+        {
+          "name": "Editar",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"taldea\": \"DAW2\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/gelak.php?id={{id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "gelak.php"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "{{id}}"
+                }
+              ]
+            },
+            "description": "Solo admin"
+          },
+          "response": []
+        },
+        {
+          "name": "Borrar",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/gelak.php?id={{id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "gelak.php"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "{{id}}"
+                }
+              ]
+            },
+            "description": "Solo admin. 409 si tiene registros relacionados."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Baliabideak",
+      "item": [
+        {
+          "name": "Listar todos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/baliabideak.php",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "baliabideak.php"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Obtener uno",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/baliabideak.php?id={{id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "baliabideak.php"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "{{id}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Crear",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"kategoriaId\": 1,\n  \"izena\": \"Portátil Dell Latitude\",\n  \"deskribapena\": \"i5, 16GB RAM\",\n  \"marka\": \"Dell\",\n  \"modeloa\": \"Latitude 5420\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/baliabideak.php",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "baliabideak.php"
+              ]
+            },
+            "description": "Solo admin"
+          },
+          "response": []
+        },
+        {
+          "name": "Editar",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"deskribapena\": \"i7, 32GB RAM\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/baliabideak.php?id={{id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "baliabideak.php"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "{{id}}"
+                }
+              ]
+            },
+            "description": "Solo admin"
+          },
+          "response": []
+        },
+        {
+          "name": "Borrar",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/baliabideak.php?id={{id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "baliabideak.php"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "{{id}}"
+                }
+              ]
+            },
+            "description": "Solo admin. 409 si tiene registros relacionados."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Gailuak (equipos)",
+      "item": [
+        {
+          "name": "Listar todos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/gailuak.php",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "gailuak.php"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Obtener uno",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/gailuak.php?id={{id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "gailuak.php"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "{{id}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Crear",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"baliabideId\": 1,\n  \"etiketa\": \"PC-0001\",\n  \"erosketaData\": \"2025-09-15\",\n  \"egoera\": \"Operatiboa\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/gailuak.php",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "gailuak.php"
+              ]
+            },
+            "description": "Solo admin. Etiqueta obligatoria y única; el equipo se ubica en Almacén. egoera: Operatiboa | Matxuratua | Baja."
+          },
+          "response": []
+        },
+        {
+          "name": "Editar",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"egoera\": \"Matxuratua\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/gailuak.php?id={{id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "gailuak.php"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "{{id}}"
+                }
+              ]
+            },
+            "description": "Solo admin. Pasar a 'Baja' cierra su ubicación activa."
+          },
+          "response": []
+        },
+        {
+          "name": "Borrar",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/gailuak.php?id={{id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "gailuak.php"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "{{id}}"
+                }
+              ]
+            },
+            "description": "Solo admin. 409 si tiene registros relacionados."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Mugimenduak (movimientos)",
+      "item": [
+        {
+          "name": "Listar historial",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/mugimenduak.php",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "mugimenduak.php"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Solo ubicaciones actuales",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/mugimenduak.php?active=1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "mugimenduak.php"
+              ],
+              "query": [
+                {
+                  "key": "active",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Filtrar por equipo",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/mugimenduak.php?gailuId={{id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "mugimenduak.php"
+              ],
+              "query": [
+                {
+                  "key": "gailuId",
+                  "value": "{{id}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Filtrar por aula",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/mugimenduak.php?gelaId={{id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "mugimenduak.php"
+              ],
+              "query": [
+                {
+                  "key": "gelaId",
+                  "value": "{{id}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Obtener uno",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/mugimenduak.php?id={{id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "mugimenduak.php"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "{{id}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Mover equipo",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"gelaId\": 2,\n  \"gailuId\": 1,\n  \"hasieraData\": \"2025-10-01\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/mugimenduak.php",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "mugimenduak.php"
+              ]
+            },
+            "description": "Admin o user. hasieraData opcional (por defecto hoy). Cierra la ubicación activa anterior."
+          },
+          "response": []
+        },
+        {
+          "name": "Corregir fechas",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"hasieraData\": \"2025-10-01\",\n  \"amaieraData\": \"2025-10-20\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/mugimenduak.php?id={{id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "mugimenduak.php"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "{{id}}"
+                }
+              ]
+            },
+            "description": "Solo admin"
+          },
+          "response": []
+        },
+        {
+          "name": "Borrar",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/mugimenduak.php?id={{id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "mugimenduak.php"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "{{id}}"
+                }
+              ]
+            },
+            "description": "Solo admin"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Stock",
+      "item": [
+        {
+          "name": "Existencias y ocupación",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/stock.php",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "stock.php"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost/inbentarioa/api"
+    },
+    {
+      "key": "id",
+      "value": "1"
+    }
+  ]
+}
