@@ -66,22 +66,18 @@ function navbar() {
 }
 
 async function logout() {
-    //const erabiltzaileakUrl = apiUrl + "erabiltzaileak.php";
-
     try {
-        //let respuesta = await fetch(erabiltzaileakUrl);
-        //let resultado = await respuesta.json();
-
-        let rola = "admin";
+        let rola = sessionStorage.getItem("rol");
 
         if (rola === "admin") {
-            window.location.href = "../pages/admin/admin.html";
+            window.location.href = "../admin/adminPantaila.html";
         } else {
+            sessionStorage.removeItem("rol");
             window.location.href = "../index.html";
         }
     } catch (error) {
         console.log(error);
-        alert("Errorea.");
+        alert("Errorea logout egiterakoan.");
     }
 }
 

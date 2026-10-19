@@ -1,1 +1,1 @@
-export const apiUrl = "https://server.talde3.edu/api/";
+export const apiUrl = "https://server.talde3.edu/api/e1inbentarioa/api/";
