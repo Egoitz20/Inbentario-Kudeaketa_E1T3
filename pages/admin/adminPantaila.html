@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="eu">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="../../img/logotxikia.jpeg">
+    <script src="../../js/admin.js" defer></script>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <title>INFORMATIKA MINTEGIA</title>
+</head>
+
+<body>
+    <div class="admin">
+        <img class="adminErab" src="../../img/user.svg">
+        <div>
+            <h2 class="adminErab">Erabiltzaile izena</h2>
+            <h4 class="adminErab">admin</h4>
+        </div>
+    </div>
+    <div class="formDiv">
+        <div class="adminTitulua">
+            <img class="userBerria" src="../../img/user-plus.svg">
+            <h2>SORTU ERABILTZAILE BERRIA</h2>
+        </div>
+        <div>
+            <form>
+                <div>
+                    <p>Erabiltzaile izena</p>
+                    <input class="inputsAdmin" type="text" id="erab" name="erab">
+                </div>
+                <div>
+                    <p>Pasahitza</p>
+                    <input class="inputsAdmin" type="password" id="pas" name="pas">
+                </div>
+                <p>Rola</p>
+                <select id="erabMota" name="erabMota" class="select">
+                    <option value="user">USER</option>
+                    <option value="admin">ADMIN</option>
+                </select>
+                <div>
+                    <button type="button" id="sortu">SORTU</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

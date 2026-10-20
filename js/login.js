@@ -1,31 +1,46 @@
 'use strict'
+import { apiUrl } from "./config.js";
 
 document.getElementById("sartu").addEventListener("click", saioaHasi);
 
 //Fetch erabiltzaileak
 async function saioaHasi() {
-    //let apiUrl = "http://192.168.207.66/wes/e1proeiktuak/erronka1/api/erabiltzaileak.php";
-    let apiUrl = "https://random-word-api.herokuapp.com/word?lang=es";
+    const loginUrl = apiUrl + "auth.php?action=login";
+
+    const username = document.getElementById("erab").value;
+    const pasahitza = document.getElementById("pas").value;
 
     try {
-        let respuesta = await fetch(apiUrl);
+        const respuesta = await fetch(
+            loginUrl,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    username,
+                    pasahitza
+                }),
+                credentials: "include"
+            }
+        );
+
         let resultado = await respuesta.json();
 
-        erab = resultado[0];
+        if (respuesta.ok === true) {
+            sessionStorage.setItem("rol", resultado.rol);
+            if (resultado.rol === "admin") {
+                window.location.href = "pages/admin/hasieraAdmin.html";
+            } else {
+                window.location.href = "pages/hasiera.html";
+            }
+        } else {
+            alert("Erabiltzailea edo/eta pasahitza okerrak dira.");
+        }
 
-        console.log(erab);
     } catch (error) {
         console.log(error);
-        //alert("Errorea erabiltzailea lortzerakoan.");
+        alert("Errorea login egiterakoan.");
     }
 }
-
-//Fetch kategoriak
-
-//Fetch baliabideak
-
-//Fetch gailuak
-
-//Fetch gelak
-
-//Fetch mugimenduak
