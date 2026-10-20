@@ -270,3 +270,40 @@ h4.adminErab {
 #sortu:active {
     transform: scale(0.96);
 }
+
+
+/* ----------------- Baliabideak ----------------- */
+
+.bilaketaBlokea {
+    text-align: center;
+    margin-top: 25px;
+}
+
+.bilaketaBlokea input[type="button"],
+.bilaketaBlokea input[type="text"] {
+    font-size: 50px;
+}
+
+.txartelakBlokea {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin: 0 auto;
+    padding: 20px;
+    max-width: 1000px;
+}
+
+.txartela {
+    border: 1px solid black;
+    text-align: center;
+    padding: 15px;
+}
+
+.txartela img {
+    max-width: 100%;
+    height: auto;
+}
+
+.txartela input[type="button"] {
+    font-size: 15px;
+}
