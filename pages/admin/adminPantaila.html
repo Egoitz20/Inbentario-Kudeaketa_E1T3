@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="../../img/logotxikia.jpeg">
-    <script src="../../js/admin.js" defer></script>
+    <script type="module" src="../../js/admin.js" defer></script>
     <link rel="stylesheet" href="../../css/styles.css">
     <title>INFORMATIKA MINTEGIA</title>
 </head>
@@ -18,13 +18,13 @@
             <h4 class="adminErab">admin</h4>
         </div>
     </div>
-    <div class="formDiv">
+    <div class="formDiv" id="formDiv">
         <div class="adminTitulua">
             <img class="userBerria" src="../../img/user-plus.svg">
             <h2>SORTU ERABILTZAILE BERRIA</h2>
         </div>
         <div>
-            <form>
+            <form id="form">
                 <div>
                     <p>Erabiltzaile izena</p>
                     <input class="inputsAdmin" type="text" id="erab" name="erab">
@@ -34,7 +34,7 @@
                     <input class="inputsAdmin" type="password" id="pas" name="pas">
                 </div>
                 <p>Rola</p>
-                <select id="erabMota" name="erabMota" class="select">
+                <select id="rola" name="rola" class="select">
                     <option value="user">USER</option>
                     <option value="admin">ADMIN</option>
                 </select>
