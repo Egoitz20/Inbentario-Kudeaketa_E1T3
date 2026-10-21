@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="eu">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Baliabideak</title>
+    <link rel="stylesheet" href="../css/styles.css" />
+    <script src="../js/hasiera.js" defer></script>
+    <script type="module" src="../js/all.js" defer></script>
+  </head>
+
+  <body data-endpoint="gelak.php">
+    <!--El header se genera dinamicamente con ../js/hasiera.js para evitar la repeticion de codigo-->
+    <header id="navbar"></header>
+
+    <main>
+      <div class="kontenedorea">
+        <!-- Bloque del buscador y filtros-->
+        <div class="bilaketaBlokea">
+          <form action="">
+            <input type="button" value="filtroa" />
+            <input type="text" name="bilaketa" id="bilaketa" />
+            <input type="button" value="lupa" />
+          </form>
+        </div>
+        <div id="txartelakBlokea"></div>
+        <div id="orrikatzeBlokea"></div>
+      </div>
+
+    </main>
+
+    <footer></footer>
+  </body>
+</html>

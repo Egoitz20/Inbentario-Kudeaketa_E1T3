@@ -24,7 +24,7 @@ function navbar() {
   let liK = document.createElement("li");
   let aK = document.createElement("a");
   aK.textContent = "Kategoriak";
-  aK.href = "#ikusiK";
+  aK.href = "../pages/kategoriak.html";
   liK.appendChild(aK);
   ul.appendChild(liK);
 
@@ -32,7 +32,7 @@ function navbar() {
   let liGa = document.createElement("li");
   let aGa = document.createElement("a");
   aGa.textContent = "Gailuak";
-  aGa.href = "#ikusiGa";
+  aGa.href = "../pages/gailuak.html";
   liGa.appendChild(aGa);
   ul.appendChild(liGa);
 
@@ -40,7 +40,7 @@ function navbar() {
   let liGe = document.createElement("li");
   let aGe = document.createElement("a");
   aGe.textContent = "Gelak";
-  aGe.href = "#ikusiGe";
+  aGe.href = "../pages/gelak.html";
   liGe.appendChild(aGe);
   ul.appendChild(liGe);
 
@@ -48,7 +48,7 @@ function navbar() {
   let liM = document.createElement("li");
   let aM = document.createElement("a");
   aM.textContent = "Mugimenduak";
-  aM.href = "#ikusiM";
+  aM.href = "../pages/mugimenduak.html";
   liM.appendChild(aM);
   ul.appendChild(liM);
 
