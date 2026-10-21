@@ -1,16 +1,17 @@
 "use strict";
 import { elementuakHartu } from "./api.js";
 
-// ------------------------------------------------
-// ------------- ALDAGAI GLOBALAK -----------------
-// ------------------------------------------------
+// ----------------------------------------------------------------------------------------------------------------------------------------------------------
+// ----------------------------------------------------------- ALDAGAI GLOBALAK -----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------------------------------------------------------------------------------------
+
 let elementuGuztiak = []; // Variable que guarda los elementos que vengan de la BBDD en un array
 let oraingoOrria = 1; // Variable para definir la página actual en la que se encuentra el usuario
 const orrikoTxartelLimitea = 9; // Variable dedicada para definir el limite de txartelas que tiene que haber por pagina.
 
-// ------------------------------------------------
-// ---------------- HORRI HASIERA -----------------
-// ------------------------------------------------
+// ----------------------------------------------------------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------ HORRI HASIERA -------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 // Función para inicializar la página
 async function hasieratu() {
@@ -21,12 +22,14 @@ async function hasieratu() {
 
   if (elementuenDatuak) {
     elementuGuztiak = elementuenDatuak;
+    sortuBilatzailea();
     orrikatu(1);
   }
 }
-// ------------------------------------------
-// -------------- TXARTELAK -----------------
-// ------------------------------------------
+
+// ----------------------------------------------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------- TXARTELAK ---------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 // Función para crear las txartelas dinamicamnete por cada elemento que se traiga de la BBD
 function sortuTxartelaElementua(elementua) {
@@ -68,9 +71,10 @@ function erakutsiTxartelak(datuZerrenda) {
     txartelakBlokea.appendChild(txartela);
   }
 }
-// ----------------------------------------------------
-// ------------------ PAGINATION ----------------------
-// ----------------------------------------------------
+
+// ----------------------------------------------------------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------ PAGINATION ----------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 // Funcion para paginar si hay mas de 9 productos
 function orrikatu(orriZenbakia) {
@@ -83,10 +87,7 @@ function orrikatu(orriZenbakia) {
   const txartelAmaiera = txarteHasiera + orrikoTxartelLimitea;
 
   // con .slice() definimos desde que elemento debe de empezar y en que elemento debe terminar, asi sacando solo la información que queremos que slaga del array global
-  const orrikoElementuak = elementuGuztiak.slice(
-    txarteHasiera,
-    txartelAmaiera,
-  );
+  const orrikoElementuak = elementuGuztiak.slice(txarteHasiera, txartelAmaiera);
 
   // Se llama a la función que genera los txartelas y genera solamente los 9 elementos de la correspondiente página
   erakutsiTxartelak(orrikoElementuak);
@@ -129,9 +130,56 @@ function sortuOrrikatzeBotoiak() {
   orrikatzeBlokea.appendChild(btnHurrengoa);
 }
 
-// -----------------------------------------
-// --------------- DEIAK -------------------
-// -----------------------------------------
+// ----------------------------------------------------------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------ BILATZAILEA ---------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+function sortuBilatzailea() {
+  const bilaketaBlokea = document.getElementById("bilaketaBlokea");
+
+  // Boton filtro
+  const btnFiltroa = document.createElement("button");
+  btnFiltroa.className = "btn-icono";
+  const imgFiltroa = document.createElement("img");
+  imgFiltroa.src = "../img/filtrar.png";
+  imgFiltroa.alt = "Filtraitu";
+  btnFiltroa.appendChild(imgFiltroa);
+
+  // Campo buscador
+  const bilatzailea = document.createElement("input");
+  bilatzailea.type = "text";
+  bilatzailea.name = "bilaketa";
+  bilatzailea.id = "bilaketa";
+  bilatzailea.placeholder = "Bilatu....";
+
+  // Boton Lupa
+  const btnLupa = document.createElement("button");
+  btnLupa.className = "btn-icono";
+  const imgLupa = document.createElement("img");
+  imgLupa.src = "../img/lupa.png";
+  imgLupa.alt = "Bilatu";
+  btnLupa.appendChild(imgLupa);
+
+  btnLupa.addEventListener("click", function() {
+    const testuBilatuta = bilatzailea.value;
+    const testuGarbia = testuBilatuta.trim();
+    
+    if (testuGarbia === "") {
+      console.log("erabiltzailea ez du idatzi ezer");
+    } else {
+      console.log("Erabiltzailea bilatzen ari da: ", testuGarbia);
+    }
+  });
+
+  // Añadirlos al bloque
+  bilaketaBlokea.appendChild(btnFiltroa);
+  bilaketaBlokea.appendChild(bilatzailea);
+  bilaketaBlokea.appendChild(btnLupa);
+}
+
+// ----------------------------------------------------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------- DEIAK ------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 // Se inicia la carga de datos
 hasieratu();
