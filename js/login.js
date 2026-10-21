@@ -33,7 +33,7 @@ async function saioaHasi() {
             if (resultado.rol === "admin") {
                 window.location.href = "pages/admin/hasieraAdmin.html";
             } else {
-                window.location.href = "pages/hasiera.html";
+                window.location.href = "pages/baliabideak.html";
             }
         } else {
             alert("Erabiltzailea edo/eta pasahitza okerrak dira.");
