@@ -1,52 +1,47 @@
 "use strict";
-import { apiUrl } from "./config.js";
+import { elementuakHartu } from "./api.js";
 
-// Variables globales
-let baliabideGuztiak = []; // Variable que guarda los baliabideak que vengan de la BBDD en un array
+// ------------------------------------------------
+// ------------- ALDAGAI GLOBALAK -----------------
+// ------------------------------------------------
+let elementuGuztiak = []; // Variable que guarda los elementos que vengan de la BBDD en un array
 let oraingoOrria = 1; // Variable para definir la página actual en la que se encuentra el usuario
 const orrikoTxartelLimitea = 9; // Variable dedicada para definir el limite de txartelas que tiene que haber por pagina.
 
-// Función para pedir la informacion de los "baliabideak" a la API
-async function baliabideakHartu() {
-  const baliabideURL = apiUrl + "baliabideak.php";
+// ------------------------------------------------
+// ---------------- HORRI HASIERA -----------------
+// ------------------------------------------------
 
-  try {
-    const erantzuna = await fetch(baliabideURL, {
-      method: "GET", // Se usa el metodo GET ya que lo unico que queremos es recoger la información
-      credentials: "include",
-    });
+// Función para inicializar la página
+async function hasieratu() {
+  // Se lee el atributo data-endpoint asignada
+  const rutaPHP = document.body.dataset.endpoint;
 
-    if (!erantzuna.ok) {
-      throw new Error(
-        "Errorea zerbitzariaren erantzunean: " + erantzuna.status,
-      );
-    }
+  const elementuenDatuak = await elementuakHartu(rutaPHP);
 
-    // Los datos recibidos se guardan en la variable global
-    baliabideGuztiak = await erantzuna.json();
-
-    // Predeterminadante se mostrara la primera página
+  if (elementuenDatuak) {
+    elementuGuztiak = elementuenDatuak;
     orrikatu(1);
-  } catch (error) {
-    console.log(error);
-    alert("Errorea baliabideak lortzean API-ren kontra");
   }
 }
+// ------------------------------------------
+// -------------- TXARTELAK -----------------
+// ------------------------------------------
 
-// Función para crear las txartelas dinamicamnete por cada baliabide que se traiga de la BBD
-function sortuTxartelaElementua(baliabidea) {
+// Función para crear las txartelas dinamicamnete por cada elemento que se traiga de la BBD
+function sortuTxartelaElementua(elementua) {
   const divTxartela = document.createElement("div");
   divTxartela.classList.add("txartela");
 
   const img = document.createElement("img");
   // Si no tiene una imagen que trae desde la base de datos, se pone una por defecto
-  img.src = baliabidea.irudia || "../img/logotxikia.jpeg";
+  img.src = elementua.irudia || "../img/logotxikia.jpeg";
 
   const hr = document.createElement("hr");
 
   const p = document.createElement("p");
-  p.classList.add("baliabideIzena");
-  p.textContent = baliabidea.izena;
+  p.classList.add("elementuIzena");
+  p.textContent = elementua.izena;
 
   const btn = document.createElement("input");
   btn.type = "button";
@@ -68,11 +63,14 @@ function erakutsiTxartelak(datuZerrenda) {
   txartelakBlokea.innerHTML = "";
 
   // Recorremos la lista filtrada y se añaden al DOM
-  for (const baliabidea of datuZerrenda) {
-    const txartela = sortuTxartelaElementua(baliabidea);
+  for (const elementua of datuZerrenda) {
+    const txartela = sortuTxartelaElementua(elementua);
     txartelakBlokea.appendChild(txartela);
   }
 }
+// ----------------------------------------------------
+// ------------------ PAGINATION ----------------------
+// ----------------------------------------------------
 
 // Funcion para paginar si hay mas de 9 productos
 function orrikatu(orriZenbakia) {
@@ -85,13 +83,13 @@ function orrikatu(orriZenbakia) {
   const txartelAmaiera = txarteHasiera + orrikoTxartelLimitea;
 
   // con .slice() definimos desde que elemento debe de empezar y en que elemento debe terminar, asi sacando solo la información que queremos que slaga del array global
-  const orrikoBaliabideak = baliabideGuztiak.slice(
+  const orrikoElementuak = elementuGuztiak.slice(
     txarteHasiera,
     txartelAmaiera,
   );
 
-  // Se llama a la función que genera los txartelas y genera solamente los 9 baliabideak de la correspondiente página
-  erakutsiTxartelak(orrikoBaliabideak);
+  // Se llama a la función que genera los txartelas y genera solamente los 9 elementos de la correspondiente página
+  erakutsiTxartelak(orrikoElementuak);
 
   // Se generan los botones de la paginación
   sortuOrrikatzeBotoiak();
@@ -105,7 +103,7 @@ function sortuOrrikatzeBotoiak() {
   orrikatzeBlokea.innerHTML = "";
 
   // Calculo del total de páginas generadas redondeando hacia arriba
-  const orriTotalak = Math.ceil(baliabideGuztiak.length / orrikoTxartelLimitea);
+  const orriTotalak = Math.ceil(elementuGuztiak.length / orrikoTxartelLimitea);
 
   // Generación del boton "Anterior"
   const btnAurrekoa = document.createElement("input");
@@ -131,5 +129,9 @@ function sortuOrrikatzeBotoiak() {
   orrikatzeBlokea.appendChild(btnHurrengoa);
 }
 
+// -----------------------------------------
+// --------------- DEIAK -------------------
+// -----------------------------------------
+
 // Se inicia la carga de datos
-baliabideakHartu();
+hasieratu();
