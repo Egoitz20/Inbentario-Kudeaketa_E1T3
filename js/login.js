@@ -31,7 +31,7 @@ async function saioaHasi() {
         if (respuesta.ok === true) {
             sessionStorage.setItem("rol", resultado.rol);
             if (resultado.rol === "admin") {
-                window.location.href = "pages/admin/hasieraAdmin.html";
+                window.location.href = "pages/baliabideak.html";
             } else {
                 window.location.href = "pages/baliabideak.html";
             }

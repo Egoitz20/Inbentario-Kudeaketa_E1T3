@@ -328,20 +328,35 @@ h4.adminErab {
   height: auto;
 }
 
-.txartela input[type="button"] {
+.btn-accion,
+.txartela input[type="button"],
+.txartela button,
+#bilaketaBlokea .btn-sortu {
+  border: none;
+  background-color: var(--printzipala);
+  color: var(--zuria);
   font-size: 15px;
+  font-weight: bold;
+  padding: 5px 12px;
+  border-radius: 12px;
   cursor: pointer;
   transition: all 0.1s ease;
 }
 
-.txartela input[type="button"]:hover {
+.btn-accion:hover,
+.txartela input[type="button"]:hover,
+.txartela button:hover,
+#bilaketaBlokea .btn-sortu:hover {
   background-color: var(--navbar);
-  transform: scale(1.25);
+  transform: scale(1.05);
 }
 
-.txartela input[type="button"]:active {
+.btn-accion:active,
+.txartela input[type="button"]:active,
+.txartela button:active,
+#bilaketaBlokea .btn-sortu:active {
   background-color: var(--printzipala);
-  transform: scale(0.85);
+  transform: scale(0.95);
 }
 
 /* ----------------- Orrikatu estiloak ----------------- */

@@ -49,21 +49,25 @@ function sortuTxartelaElementua(elementua) {
   const btn = document.createElement("input");
   btn.type = "button";
   btn.value = "Ikusi";
+  btn.className = "btn-accion";
 
   divTxartela.appendChild(img);
   divTxartela.appendChild(hr);
   divTxartela.appendChild(p);
   divTxartela.appendChild(btn);
 
+  // Mira que el rol guardado en la sesion sea admin, y muestra el boton editatu e ikusi
   const rol = sessionStorage.getItem("rol");
   if (rol === "admin") {
     const btnEditatu = document.createElement("button");
     btnEditatu.type = "button";
     btnEditatu.textContent = "Editatu";
+    btnEditatu.className = "btn-accion";
 
     const btnEzabatu = document.createElement("button");
     btnEzabatu.type = "button";
     btnEzabatu.textContent = "Ezabatu";
+    btnEzabatu.className = "btn-accion";
 
     divTxartela.appendChild(btnEditatu);
     divTxartela.appendChild(btnEzabatu);
@@ -186,12 +190,13 @@ function sortuBilatzailea() {
   });
 
   // Boton Sortu
+  // Mira que el rol guardado en la sesion sea admin, y muestra el boton sortu
   const rol = sessionStorage.getItem("rol");
   if (rol === "admin") {
     const btnSortu = document.createElement("button");
     btnSortu.type = "button";
     btnSortu.textContent = "Sortu";
-    btnSortu.className = "btn-sortu";
+    btnSortu.className = "btn-accion btn-sortu";
     bilaketaBlokea.appendChild(btnSortu);
   }
 
