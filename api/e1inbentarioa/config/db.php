@@ -14,7 +14,14 @@ const BAIMENDUTAKO_JATORRIAK = [
     'http://localhost',
     'http://localhost:5500',
     'http://127.0.0.1:5500',
+    'http://talde3.edu',
+    'https://talde3.edu',
+    'http://www.talde3.edu',
     'https://www.talde3.edu',
+    'http://server.talde3.edu',
+    'https://server.talde3.edu',
+    'http://192.168.207.33',
+    'https://192.168.207.33',
 ];
 
 function datuBasea(): PDO

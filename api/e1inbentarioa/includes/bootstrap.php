@@ -19,7 +19,11 @@ spl_autoload_register(function (string $klasea): void {
 // Permite que el frontend (otro origen) llame a la API usando cookies.
 // Solo se aceptan los orígenes de BAIMENDUTAKO_JATORRIAK (nunca "*").
 $jatorria = $_SERVER['HTTP_ORIGIN'] ?? '';
-if (in_array($jatorria, BAIMENDUTAKO_JATORRIAK, true)) {
+$baimenduta = in_array($jatorria, BAIMENDUTAKO_JATORRIAK, true)
+    || preg_match('/^https?:\/\/(localhost|127\.0\.0\.1|192\.168\.\d+\.\d+)(:\d+)?$/', $jatorria)
+    || preg_match('/^https?:\/\/([a-z0-9-]+\.)?talde3\.edu(:\d+)?$/', $jatorria);
+
+if ($baimenduta && $jatorria !== '') {
     header('Access-Control-Allow-Origin: ' . $jatorria);
     header('Access-Control-Allow-Credentials: true');
     header('Access-Control-Allow-Headers: Content-Type, Authorization');
