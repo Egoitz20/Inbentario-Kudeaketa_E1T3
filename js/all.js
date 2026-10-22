@@ -55,6 +55,20 @@ function sortuTxartelaElementua(elementua) {
   divTxartela.appendChild(p);
   divTxartela.appendChild(btn);
 
+  const rol = sessionStorage.getItem("rol");
+  if (rol === "admin") {
+    const btnEditatu = document.createElement("button");
+    btnEditatu.type = "button";
+    btnEditatu.textContent = "Editatu";
+
+    const btnEzabatu = document.createElement("button");
+    btnEzabatu.type = "button";
+    btnEzabatu.textContent = "Ezabatu";
+
+    divTxartela.appendChild(btnEditatu);
+    divTxartela.appendChild(btnEzabatu);
+  }
+
   return divTxartela;
 }
 
@@ -160,10 +174,10 @@ function sortuBilatzailea() {
   imgLupa.alt = "Bilatu";
   btnLupa.appendChild(imgLupa);
 
-  btnLupa.addEventListener("click", function() {
+  btnLupa.addEventListener("click", function () {
     const testuBilatuta = bilatzailea.value;
     const testuGarbia = testuBilatuta.trim();
-    
+
     if (testuGarbia === "") {
       console.log("erabiltzailea ez du idatzi ezer");
     } else {
@@ -171,6 +185,7 @@ function sortuBilatzailea() {
     }
   });
 
+  // Boton Sortu
   const rol = sessionStorage.getItem("rol");
   if (rol === "admin") {
     const btnSortu = document.createElement("button");
