@@ -171,6 +171,15 @@ function sortuBilatzailea() {
     }
   });
 
+  const rol = sessionStorage.getItem("rol");
+  if (rol === "admin") {
+    const btnSortu = document.createElement("button");
+    btnSortu.type = "button";
+    btnSortu.textContent = "Sortu";
+    btnSortu.className = "btn-sortu";
+    bilaketaBlokea.appendChild(btnSortu);
+  }
+
   // Añadirlos al bloque
   bilaketaBlokea.appendChild(btnFiltroa);
   bilaketaBlokea.appendChild(bilatzailea);
