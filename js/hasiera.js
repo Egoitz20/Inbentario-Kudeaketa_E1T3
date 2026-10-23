@@ -55,8 +55,8 @@ function navbar() {
   let divUser = document.createElement("div");
   let user = document.createElement("img");
   user.src = "../../img/user.svg";
-  user.id = "logout";
-  user.addEventListener("click", logout);
+  user.id = "erabPantaila";
+  user.addEventListener("click", erabPantaila);
 
   divUser.appendChild(user);
   ul.appendChild(divUser);
@@ -64,15 +64,14 @@ function navbar() {
   header.appendChild(ul);
 }
 
-async function logout() {
+async function erabPantaila() {
   try {
     let rola = sessionStorage.getItem("rol");
 
     if (rola === "admin") {
-      window.location.href = "../admin/adminPantaila.html";
+      window.location.href = "../pages/admin/adminPantaila.html";
     } else {
-      sessionStorage.removeItem("rol");
-      window.location.href = "../index.html";
+      window.location.href = "../pages/userPantaila.html";
     }
   } catch (error) {
     console.log(error);
@@ -80,4 +79,21 @@ async function logout() {
   }
 }
 
+function footer() {
+  let footer = document.getElementById("footer");
+
+  footer.classList.add("foo");
+
+  let divLogo = document.createElement("div");
+  let logo = document.createElement("img");
+  logo.src = "../../img/logo.png";
+  divLogo.appendChild(logo);
+  footer.appendChild(divLogo);
+
+  let p = document.createElement("p");
+  p.textContent = "INFORMATIKA SANTURTZI MINTEGIA"
+  footer.appendChild(p);
+}
+
 navbar();
+footer();
