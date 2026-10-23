@@ -145,6 +145,12 @@ ul li a:hover {
   padding: 2px;
 }
 
+#logout:hover {
+    cursor: pointer;
+    background-color: var(--printzipala);
+}
+
+
 /* Admin */
 .admin {
   margin: 20px 20px;
