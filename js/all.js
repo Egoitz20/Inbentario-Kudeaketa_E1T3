@@ -1,6 +1,10 @@
 "use strict";
 import { elementuakHartu } from "./api.js";
 
+// **********************************************************************************************************************************************************
+// *************************************************************** PAGES JS *********************************************************************************
+// **********************************************************************************************************************************************************
+
 // ----------------------------------------------------------------------------------------------------------------------------------------------------------
 // ----------------------------------------------------------- ALDAGAI GLOBALAK -----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -52,6 +56,13 @@ function sortuTxartelaElementua(elementua) {
   btn.type = "button";
   btn.value = "Ikusi";
   btn.className = "btn-accion";
+
+  // al hacer click sobre el boton, guarda el elemento y redirige
+  btn.addEventListener("click", () => {
+    // Se convierte el objeto a texto JSON y se guarda en sessionStorage
+    sessionStorage.setItem("aukeratutakoElementua", JSON.stringify(elementua));
+    window.location.href = "gestion/ikusi.html";
+  });
 
   divTxartela.appendChild(img);
   divTxartela.appendChild(hr);
@@ -226,5 +237,69 @@ function bilatu(testuGarbia) {
 // --------------------------------------------------------------- DEIAK ------------------------------------------------------------------------------------
 // ----------------------------------------------------------------------------------------------------------------------------------------------------------
 
-// Se inicia la carga de datos
-hasieratu();
+// Si existe el bloque de tarjetas en el HTML, inicializamos el listado
+if (document.getElementById("txartelakBlokea")) {
+  hasieratu();
+}
+
+// Si existe el bloque de título de detalle en el HTML (ikusi.html), recuperamos el elemento
+if (document.getElementById("elementuTitulua")) {
+  elementuaErrekuperatu();
+}
+
+// **********************************************************************************************************************************************************
+// *************************************************************** IKUSI JS *********************************************************************************
+// **********************************************************************************************************************************************************
+
+function elementuaErrekuperatu() {
+  const datuakString = sessionStorage.getItem("aukeratutakoElementua");
+
+  // Si no hay datos guardados en el sessionStorage, se sale de la función
+  if (!datuakString) return;
+
+  const elementua = JSON.parse(datuakString);
+
+  const eTitulua = document.getElementById("elementuTitulua");
+  const eOsagaiak = document.getElementById("elementuOsagaiak");
+  const eIrudia = document.getElementById("elementuIrudia");
+  const eMugimenduak = document.getElementById("elementuMugimenduak");
+
+  // Titulo
+  const h1 = document.createElement("h1");
+  h1.textContent = elementua.izena;
+  eTitulua.appendChild(h1);
+
+  // Lista los componentes del elemento
+  const ulOsagaiak = document.createElement("ul");
+  ulOsagaiak.classList.add("elementuOsagaiak");
+
+  const liDeskribapena = document.createElement("li");
+  liDeskribapena.classList.add("deskribapena");
+  liDeskribapena.textContent = `Deskribapena: ${elementua.deskribapena || "Ez dago"}`;
+
+  const liMarka = document.createElement("li");
+  liMarka.classList.add("marka");
+  liMarka.textContent = `Marka: ${elementua.marka || "Ez dago"}`;
+
+  const liModeloa = document.createElement("li");
+  liModeloa.classList.add("modeloa");
+  liModeloa.textContent = `Modeloa: ${elementua.modeloa || "Ez dago"}`;
+
+  ulOsagaiak.appendChild(liDeskribapena);
+  ulOsagaiak.appendChild(liMarka);
+  ulOsagaiak.appendChild(liModeloa);
+  eOsagaiak.appendChild(ulOsagaiak);
+
+  // Imagen
+  const img = document.createElement("img");
+  img.src = elementua.irudia || "../../img/logotxikia.jpeg";
+  img.alt = elementua.izena;
+  eIrudia.appendChild(img);
+
+  // Movimientos
+  const ulMugimenduak = document.createElement("ul");
+  const liMu = document.createElement("li");
+  liMu.textContent = `Mugimenduak: ${elementua.mugimenduak || "Ez dago mugimendurik"}`;
+  ulMugimenduak.appendChild(liMu);
+  eMugimenduak.appendChild(ulMugimenduak);
+}
