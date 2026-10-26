@@ -8,6 +8,7 @@ import { elementuakHartu } from "./api.js";
 let elementuGuztiak = []; // Variable que guarda los elementos que vengan de la BBDD en un array
 let oraingoOrria = 1; // Variable para definir la página actual en la que se encuentra el usuario
 const orrikoTxartelLimitea = 9; // Variable dedicada para definir el limite de txartelas que tiene que haber por pagina.
+let filtratutakoElementuak = []; // guarda los elementos que contenagn el nombre buscado desde el buscador
 
 // ----------------------------------------------------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------ HORRI HASIERA -------------------------------------------------------------------------------
@@ -22,6 +23,7 @@ async function hasieratu() {
 
   if (elementuenDatuak) {
     elementuGuztiak = elementuenDatuak;
+    filtratutakoElementuak = elementuenDatuak;
     sortuBilatzailea();
     orrikatu(1);
   }
@@ -105,7 +107,11 @@ function orrikatu(orriZenbakia) {
   const txartelAmaiera = txarteHasiera + orrikoTxartelLimitea;
 
   // con .slice() definimos desde que elemento debe de empezar y en que elemento debe terminar, asi sacando solo la información que queremos que slaga del array global
-  const orrikoElementuak = elementuGuztiak.slice(txarteHasiera, txartelAmaiera);
+  //const orrikoElementuak = elementuGuztiak.slice(txarteHasiera, txartelAmaiera);
+  const orrikoElementuak = filtratutakoElementuak.slice(
+    txarteHasiera,
+    txartelAmaiera,
+  );
 
   // Se llama a la función que genera los txartelas y genera solamente los 9 elementos de la correspondiente página
   erakutsiTxartelak(orrikoElementuak);
@@ -122,7 +128,9 @@ function sortuOrrikatzeBotoiak() {
   orrikatzeBlokea.innerHTML = "";
 
   // Calculo del total de páginas generadas redondeando hacia arriba
-  const orriTotalak = Math.ceil(elementuGuztiak.length / orrikoTxartelLimitea);
+  //const orriTotalak = Math.ceil(elementuGuztiak.length / orrikoTxartelLimitea);
+  const orriTotalak =
+    Math.ceil(filtratutakoElementuak.length / orrikoTxartelLimitea) || 1;
 
   // Generación del boton "Anterior"
   const btnAurrekoa = document.createElement("input");
@@ -182,11 +190,11 @@ function sortuBilatzailea() {
     const testuBilatuta = bilatzailea.value;
     const testuGarbia = testuBilatuta.trim();
 
-    if (testuGarbia === "") {
-      console.log("erabiltzailea ez du idatzi ezer");
-    } else {
-      console.log("Erabiltzailea bilatzen ari da: ", testuGarbia);
-    }
+    // Se guardan los resultados encontrados
+    filtratutakoElementuak = bilatu(testuGarbia);
+
+    // Se recarga la página con los elementos filtrados
+    orrikatu(1);
   });
 
   // Boton Sortu
@@ -204,6 +212,14 @@ function sortuBilatzailea() {
   bilaketaBlokea.appendChild(btnFiltroa);
   bilaketaBlokea.appendChild(bilatzailea);
   bilaketaBlokea.appendChild(btnLupa);
+}
+
+function bilatu(testuGarbia) {
+  const emaitza = elementuGuztiak.filter((elementua) => {
+    return elementua.izena.toLowerCase().includes(testuGarbia.toLowerCase());
+  });
+
+  return emaitza;
 }
 
 // ----------------------------------------------------------------------------------------------------------------------------------------------------------
