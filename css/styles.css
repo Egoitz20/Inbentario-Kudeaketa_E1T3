@@ -8,6 +8,13 @@
 }
 
 /* Orokorrak */
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #f7f8fc;
+  color: #333333;
+}
+
 .bodyLogin {
   margin: 0;
   min-height: 100vh;
@@ -109,7 +116,8 @@
 }
 
 /* Hasiera Pantaila B */
-ul {
+ul.nav,
+header ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -146,10 +154,9 @@ ul li a:hover {
 }
 
 #logout:hover {
-    cursor: pointer;
-    background-color: var(--printzipala);
+  cursor: pointer;
+  background-color: var(--printzipala);
 }
-
 
 /* Admin */
 .admin {
@@ -373,4 +380,126 @@ h4.adminErab {
 
 #orrikatzeBlokea input[type="button"] {
   font-size: 20px;
+}
+
+/* ----------------- Elementu deskribapen pantaila (ikusi.html) ----------------- */
+
+.baliabideInfo {
+  max-width: 1700px;
+  margin: 40px auto;
+  padding: 35px 40px;
+  background-color: var(--zuria);
+  border: 1px solid var(--grisa2);
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  grid-template-areas:
+    "titulua titulua"
+    "osagaiak irudia"
+    "mugimenduak irudia"
+    "botoiak botoiak";
+  gap: 24px 35px;
+  align-items: start;
+}
+
+#elementuTitulua {
+  grid-area: titulua;
+  border-bottom: 2px solid #eef0f5;
+  padding-bottom: 15px;
+  margin-bottom: 5px;
+}
+
+#elementuTitulua h1 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: #2c3e50;
+}
+
+#elementuOsagaiak {
+  grid-area: osagaiak;
+}
+
+.baliabideInfo ul {
+  background-color: transparent;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.elementuOsagaiak li {
+  background-color: #f8f9fa;
+  padding: 14px 18px;
+  border-radius: 8px;
+  font-size: 16px;
+  color: #333333;
+  line-height: 1.5;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+}
+
+#elementuIrudia {
+  grid-area: irudia;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fbfbfd;
+  border: 1px solid var(--grisa2);
+  border-radius: 14px;
+  padding: 20px;
+}
+
+#elementuIrudia img {
+  max-width: 100%;
+  max-height: 270px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
+  transition: transform 0.25s ease;
+}
+
+#elementuMugimenduak {
+  grid-area: mugimenduak;
+}
+
+#elementuMugimenduak ul li {
+  background-color: #f0f2fb;
+  padding: 14px 18px;
+  border-radius: 8px;
+  font-size: 15px;
+  color: #333333;
+}
+
+#elementuBotoiak {
+  grid-area: botoiak;
+  margin-top: 10px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.btn-atzera {
+  border: none;
+  background-color: var(--printzipala);
+  color: var(--zuria);
+  font-size: 15px;
+  font-weight: bold;
+  padding: 9px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-atzera:hover {
+  background-color: var(--navbar);
+  transform: translateY(-2px);
+}
+
+.btn-atzera:active {
+  transform: translateY(0);
 }
