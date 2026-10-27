@@ -31,3 +31,42 @@ export async function elementuakHartu(rutaPHP) {
     return null;
   }
 }
+
+export async function ezabatuBtn(rutaPHP, divTxartela) {
+  const id = divTxartela.id;
+
+  const elementuURL = apiUrl + rutaPHP + "?id=" + id;
+
+  try {
+    if (confirm("Ezabaketa konfirmatu") == true) {
+
+      const respuesta = await fetch(elementuURL, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id: id, ekintza: "ezabatu" }),
+        credentials: "include"
+      });
+
+      if (!respuesta.ok) {
+        console.log(respuesta);
+        throw new Error("Errorea zerbitzariarekin konektatzean.");
+      }
+
+      const emaitza = await respuesta.json();
+
+      if (emaitza.success) {
+        divTxartela.remove();
+      } else {
+        alert("Ezin izan da elementua ezabatu.");
+      }
+    } else {
+      return;
+    }
+
+  } catch (error) {
+    console.error(error);
+    alert("Errorea ezabaketa egiterakoan.");
+  }
+}

@@ -1,5 +1,6 @@
 "use strict";
 import { elementuakHartu } from "./api.js";
+import { ezabatuBtn } from "./api.js";
 
 // ----------------------------------------------------------------------------------------------------------------------------------------------------------
 // ----------------------------------------------------------- ALDAGAI GLOBALAK -----------------------------------------------------------------------------
@@ -37,6 +38,7 @@ async function hasieratu() {
 function sortuTxartelaElementua(elementua) {
   const divTxartela = document.createElement("div");
   divTxartela.classList.add("txartela");
+  divTxartela.id = elementua.id;
 
   const img = document.createElement("img");
   // Si no tiene una imagen que trae desde la base de datos, se pone una por defecto
@@ -70,6 +72,9 @@ function sortuTxartelaElementua(elementua) {
     btnEzabatu.type = "button";
     btnEzabatu.textContent = "Ezabatu";
     btnEzabatu.className = "btn-accion";
+    btnEzabatu.addEventListener("click", () => {
+      ezabatuBtn("baliabideak.php", divTxartela);
+    });
 
     divTxartela.appendChild(btnEditatu);
     divTxartela.appendChild(btnEzabatu);
