@@ -36,6 +36,7 @@ async function hasieratu() {
 
 // Función para crear las txartelas dinamicamnete por cada elemento que se traiga de la BBD
 function sortuTxartelaElementua(elementua) {
+  const rutaPHP = document.body.dataset.endpoint;
   const divTxartela = document.createElement("div");
   divTxartela.classList.add("txartela");
   divTxartela.id = elementua.id;
@@ -73,7 +74,7 @@ function sortuTxartelaElementua(elementua) {
     btnEzabatu.textContent = "Ezabatu";
     btnEzabatu.className = "btn-accion";
     btnEzabatu.addEventListener("click", () => {
-      ezabatuBtn("baliabideak.php", divTxartela);
+      ezabatuBtn(rutaPHP, divTxartela);
     });
 
     divTxartela.appendChild(btnEditatu);

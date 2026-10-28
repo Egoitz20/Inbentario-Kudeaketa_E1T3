@@ -36,6 +36,7 @@ export async function ezabatuBtn(rutaPHP, divTxartela) {
   const id = divTxartela.id;
 
   const elementuURL = apiUrl + rutaPHP + "?id=" + id;
+  console.log(elementuURL);
 
   try {
     if (confirm("Ezabaketa konfirmatu") == true) {
@@ -55,9 +56,11 @@ export async function ezabatuBtn(rutaPHP, divTxartela) {
       }
 
       const emaitza = await respuesta.json();
+      console.log(emaitza);
 
-      if (emaitza.success) {
+      if (emaitza.ok) {
         divTxartela.remove();
+        window.location.reload();
       } else {
         alert("Ezin izan da elementua ezabatu.");
       }
