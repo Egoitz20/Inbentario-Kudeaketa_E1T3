@@ -36,7 +36,6 @@ img {
 }
 
 /* Login */
-
 .bodyLogin {
   min-height: 100vh;
   min-height: 100dvh;
@@ -131,9 +130,8 @@ img {
 }
 
 /* Botoiak */
-#sartu,
-#sortu,
-#logout {
+.btnPrintzipalak
+{
   border: none;
   background-color: var(--printzipala);
   color: var(--zuria);
@@ -148,22 +146,16 @@ img {
     box-shadow var(--trantsizioa);
 }
 
-#sartu:hover,
-#sortu:hover,
-#logout:hover {
+.btnPrintzipalak:hover {
   background-color: var(--navbar);
   box-shadow: 0 4px 12px rgba(92, 92, 255, 0.2);
 }
 
-#sartu:active,
-#sortu:active,
-#logout:active {
+.btnPrintzipalak:active {
   transform: scale(0.97);
 }
 
-#sartu:focus-visible,
-#sortu:focus-visible,
-#logout:focus-visible {
+.btnPrintzipalak:focus-visible {
   outline: 3px solid var(--navbar);
   outline-offset: 3px;
 }
