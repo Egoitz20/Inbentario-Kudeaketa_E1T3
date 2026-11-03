@@ -8,7 +8,7 @@ function navbar() {
 
   let divLogo = document.createElement("div");
   let logo = document.createElement("img");
-  logo.src = "../../img/logo.png";
+  logo.src = window.location.origin + "/img/logo.png";
   divLogo.appendChild(logo);
   ul.appendChild(divLogo);
 
@@ -16,7 +16,7 @@ function navbar() {
   let liB = document.createElement("li");
   let aB = document.createElement("a");
   aB.textContent = "Baliabideak";
-  aB.href = "../pages/baliabideak.html";
+  aB.href = window.location.origin + "/pages/baliabideak.html";
   liB.appendChild(aB);
   ul.appendChild(liB);
 
@@ -24,7 +24,7 @@ function navbar() {
   let liK = document.createElement("li");
   let aK = document.createElement("a");
   aK.textContent = "Kategoriak";
-  aK.href = "../pages/kategoriak.html";
+  aK.href = window.location.origin + "/pages/kategoriak.html";
   liK.appendChild(aK);
   ul.appendChild(liK);
 
@@ -32,7 +32,7 @@ function navbar() {
   let liGa = document.createElement("li");
   let aGa = document.createElement("a");
   aGa.textContent = "Gailuak";
-  aGa.href = "../pages/gailuak.html";
+  aGa.href = window.location.origin + "/pages/gailuak.html";
   liGa.appendChild(aGa);
   ul.appendChild(liGa);
 
@@ -40,7 +40,7 @@ function navbar() {
   let liGe = document.createElement("li");
   let aGe = document.createElement("a");
   aGe.textContent = "Gelak";
-  aGe.href = "../pages/gelak.html";
+  aGe.href = window.location.origin + "/pages/gelak.html";
   liGe.appendChild(aGe);
   ul.appendChild(liGe);
 
@@ -48,15 +48,15 @@ function navbar() {
   let liM = document.createElement("li");
   let aM = document.createElement("a");
   aM.textContent = "Mugimenduak";
-  aM.href = "../pages/mugimenduak.html";
+  aM.href = window.location.origin + "/pages/mugimenduak.html";
   liM.appendChild(aM);
   ul.appendChild(liM);
 
   let divUser = document.createElement("div");
   let user = document.createElement("img");
-  user.src = "../../img/user.svg";
-  user.id = "erabPantaila";
-  user.addEventListener("click", erabPantaila);
+  user.src = window.location.origin + "/img/user.svg";
+  user.id = "logout";
+  user.addEventListener("click", logout);
 
   divUser.appendChild(user);
   ul.appendChild(divUser);
@@ -69,9 +69,10 @@ async function erabPantaila() {
     let rola = sessionStorage.getItem("rol");
 
     if (rola === "admin") {
-      window.location.href = "../pages/admin/adminPantaila.html";
+      window.location.origin + "/admin/adminPantaila.html";
     } else {
-      window.location.href = "../pages/userPantaila.html";
+      sessionStorage.removeItem("rol");
+      window.location.origin + "index.html";
     }
   } catch (error) {
     console.log(error);
