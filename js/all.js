@@ -1,6 +1,7 @@
 "use strict";
 import { elementuakHartu } from "./api.js";
 import { ezabatuBtn } from "./api.js";
+import { elementuaEguneratu } from "./api.js";
 
 // **********************************************************************************************************************************************************
 // *************************************************************** PAGES JS *********************************************************************************
@@ -9,6 +10,15 @@ import { ezabatuBtn } from "./api.js";
 // ----------------------------------------------------------------------------------------------------------------------------------------------------------
 // ----------------------------------------------------------- ALDAGAI GLOBALAK -----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+// Función auxiliar para obtener la ruta relativa base hacia la carpeta pages/
+function getPagesBase() {
+  const path = window.location.pathname;
+  if (path.includes("/gestion/") || path.includes("/admin/")) {
+    return "../";
+  }
+  return "";
+}
 
 let elementuGuztiak = []; // Variable que guarda los elementos que vengan de la BBDD en un array
 let oraingoOrria = 1; // Variable para definir la página actual en la que se encuentra el usuario
@@ -64,7 +74,11 @@ function sortuTxartelaElementua(elementua) {
   btn.addEventListener("click", () => {
     // Se convierte el objeto a texto JSON y se guarda en sessionStorage
     sessionStorage.setItem("aukeratutakoElementua", JSON.stringify(elementua));
-    window.location.href = "gestion/ikusi.html";
+    sessionStorage.setItem(
+      "aukeratutakoEndpoint",
+      rutaPHP || "baliabideak.php",
+    );
+    window.location.href = getPagesBase() + "gestion/ikusi.html";
   });
 
   divTxartela.appendChild(img);
@@ -79,6 +93,17 @@ function sortuTxartelaElementua(elementua) {
     btnEditatu.type = "button";
     btnEditatu.textContent = "Editatu";
     btnEditatu.className = "btn-accion";
+    btnEditatu.addEventListener("click", () => {
+      sessionStorage.setItem(
+        "aukeratutakoElementua",
+        JSON.stringify(elementua),
+      );
+      sessionStorage.setItem(
+        "aukeratutakoEndpoint",
+        rutaPHP || "baliabideak.php",
+      );
+      window.location.href = getPagesBase() + "admin/editatu.html";
+    });
 
     const btnEzabatu = document.createElement("button");
     btnEzabatu.type = "button";
@@ -253,6 +278,11 @@ if (document.getElementById("elementuTitulua")) {
   elementuaErrekuperatu();
 }
 
+// Si existe el bloque de edición en el HTML (editatu.html), inicializamos el formulario
+if (document.getElementById("elementuTituluaEditatu")) {
+  elementuaEditatuHasieratu();
+}
+
 // **********************************************************************************************************************************************************
 // *************************************************************** IKUSI JS *********************************************************************************
 // **********************************************************************************************************************************************************
@@ -308,4 +338,212 @@ function elementuaErrekuperatu() {
   liMu.textContent = `Mugimenduak: ${elementua.mugimenduak || "Ez dago mugimendurik"}`;
   ulMugimenduak.appendChild(liMu);
   eMugimenduak.appendChild(ulMugimenduak);
+
+  // Si el usuario es admin, también puede ir a editatu desde la pantalla ikusi
+  const rol = sessionStorage.getItem("rol");
+  if (rol === "admin") {
+    const eBotoiak = document.getElementById("elementuBotoiak");
+    if (eBotoiak && !document.getElementById("btnIkusiEditatu")) {
+      const btnEditatu = document.createElement("button");
+      btnEditatu.id = "btnIkusiEditatu";
+      btnEditatu.type = "button";
+      btnEditatu.className = "btn-atzera";
+      btnEditatu.textContent = "Editatu";
+      btnEditatu.addEventListener("click", () => {
+        window.location.href = "../admin/editatu.html";
+      });
+      eBotoiak.appendChild(btnEditatu);
+    }
+  }
+}
+
+// **********************************************************************************************************************************************************
+// ************************************************************** EDITATU JS ********************************************************************************
+// **********************************************************************************************************************************************************
+
+function elementuaEditatuHasieratu() {
+  const datuakString = sessionStorage.getItem("aukeratutakoElementua");
+
+  // Si no hay datos guardados en el sessionStorage, se redirige a la lista
+  if (!datuakString) {
+    window.location.href = "../pages/baliabideak.html";
+    return;
+  }
+
+  const elementua = JSON.parse(datuakString);
+
+  const eTitulua = document.getElementById("elementuTituluaEditatu");
+  const eOsagaiak = document.getElementById("elementuOsagaiakEditatu");
+  const eIrudia = document.getElementById("elementuIrudia");
+  const eMugimenduak = document.getElementById("elementuMugimenduak");
+  const eBotoiak = document.getElementById("elementuBotoiak");
+
+  // 1. Título y campo editable para el nombre del elemento (izena)
+  const h1 = document.createElement("h1");
+  h1.textContent = "Elementua editatu";
+  eTitulua.appendChild(h1);
+
+  const divIzena = document.createElement("div");
+  divIzena.className = "editTaldea tituluaTaldea";
+
+  const labelIzena = document.createElement("label");
+  labelIzena.htmlFor = "editIzena";
+  labelIzena.textContent = "Elementuaren izena: *";
+
+  const inputIzena = document.createElement("input");
+  inputIzena.type = "text";
+  inputIzena.id = "editIzena";
+  inputIzena.className = "inputsEditatu";
+  inputIzena.value = elementua.izena || "";
+  inputIzena.placeholder = "Idatzi elementuaren izena...";
+  inputIzena.required = true;
+
+  divIzena.appendChild(labelIzena);
+  divIzena.appendChild(inputIzena);
+  eTitulua.appendChild(divIzena);
+
+  // 2. Componentes editables (deskribapena, marka, modeloa)
+  const ulOsagaiak = document.createElement("ul");
+  ulOsagaiak.classList.add("elementuOsagaiak", "editatuOsagaiak");
+
+  // Deskribapena
+  const liDeskribapena = document.createElement("li");
+  liDeskribapena.classList.add("deskribapena");
+  const labelDeskribapena = document.createElement("label");
+  labelDeskribapena.htmlFor = "editDeskribapena";
+  labelDeskribapena.textContent = "Deskribapena:";
+  const textareaDeskribapena = document.createElement("textarea");
+  textareaDeskribapena.id = "editDeskribapena";
+  textareaDeskribapena.className = "inputsEditatu textareaEditatu";
+  textareaDeskribapena.rows = 4;
+  textareaDeskribapena.placeholder = "Idatzi deskribapena...";
+  textareaDeskribapena.value = elementua.deskribapena || "";
+
+  liDeskribapena.appendChild(labelDeskribapena);
+  liDeskribapena.appendChild(textareaDeskribapena);
+
+  // Marka
+  const liMarka = document.createElement("li");
+  liMarka.classList.add("marka");
+  const labelMarka = document.createElement("label");
+  labelMarka.htmlFor = "editMarka";
+  labelMarka.textContent = "Marka:";
+  const inputMarka = document.createElement("input");
+  inputMarka.type = "text";
+  inputMarka.id = "editMarka";
+  inputMarka.className = "inputsEditatu";
+  inputMarka.placeholder = "Idatzi marka...";
+  inputMarka.value = elementua.marka || "";
+
+  liMarka.appendChild(labelMarka);
+  liMarka.appendChild(inputMarka);
+
+  // Modeloa
+  const liModeloa = document.createElement("li");
+  liModeloa.classList.add("modeloa");
+  const labelModeloa = document.createElement("label");
+  labelModeloa.htmlFor = "editModeloa";
+  labelModeloa.textContent = "Modeloa:";
+  const inputModeloa = document.createElement("input");
+  inputModeloa.type = "text";
+  inputModeloa.id = "editModeloa";
+  inputModeloa.className = "inputsEditatu";
+  inputModeloa.placeholder = "Idatzi modeloa...";
+  inputModeloa.value = elementua.modeloa || "";
+
+  liModeloa.appendChild(labelModeloa);
+  liModeloa.appendChild(inputModeloa);
+
+  ulOsagaiak.appendChild(liDeskribapena);
+  ulOsagaiak.appendChild(liMarka);
+  ulOsagaiak.appendChild(liModeloa);
+  eOsagaiak.appendChild(ulOsagaiak);
+
+  // Irudia
+  if (eIrudia) {
+    const img = document.createElement("img");
+    img.src = elementua.irudia || "../../img/logotxikia.jpeg";
+    img.alt = elementua.izena || "Elementuaren irudia";
+    eIrudia.appendChild(img);
+  }
+
+  // Mugimenduak
+  if (eMugimenduak) {
+    const ulMugimenduak = document.createElement("ul");
+    const liMu = document.createElement("li");
+    liMu.textContent = `Mugimenduak: ${elementua.mugimenduak || "Ez dago mugimendurik"}`;
+    ulMugimenduak.appendChild(liMu);
+    eMugimenduak.appendChild(ulMugimenduak);
+  }
+
+  // Botoiak
+  if (eBotoiak) {
+    eBotoiak.innerHTML = "";
+
+    const btnAtzera = document.createElement("button");
+    btnAtzera.type = "button";
+    btnAtzera.className = "btn-atzera";
+    btnAtzera.textContent = "Atzera";
+    btnAtzera.addEventListener("click", () => {
+      window.history.back();
+    });
+
+    const btnGorde = document.createElement("button");
+    btnGorde.type = "button";
+    btnGorde.className = "btn-atzera btn-gorde";
+    btnGorde.id = "btnGorde";
+    btnGorde.textContent = "Gorde";
+
+    btnGorde.addEventListener("click", async () => {
+      const berriaIzena = inputIzena.value.trim();
+      const berriaDeskribapena = textareaDeskribapena.value.trim();
+      const berriaMarka = inputMarka.value.trim();
+      const berriaModeloa = inputModeloa.value.trim();
+
+      if (!berriaIzena) {
+        alert("Mesedez, idatzi elementuaren izena.");
+        inputIzena.focus();
+        return;
+      }
+
+      btnGorde.disabled = true;
+      btnGorde.textContent = "Gordetzen...";
+
+      const rutaPHP =
+        sessionStorage.getItem("aukeratutakoEndpoint") || "baliabideak.php";
+
+      const datuak = {
+        kategoriaId: elementua.kategoriaId || 1,
+        izena: berriaIzena,
+        deskribapena: berriaDeskribapena,
+        marka: berriaMarka,
+        modeloa: berriaModeloa,
+      };
+
+      const emaitza = await elementuaEguneratu(rutaPHP, elementua.id, datuak);
+
+      btnGorde.disabled = false;
+      btnGorde.textContent = "Gorde";
+
+      if (emaitza) {
+        // Actualizamos los datos en sessionStorage para que ikusi o la vista previa queden actualizados
+        const elementuEguneratua = {
+          ...elementua,
+          izena: berriaIzena,
+          deskribapena: berriaDeskribapena,
+          marka: berriaMarka,
+          modeloa: berriaModeloa,
+        };
+        sessionStorage.setItem(
+          "aukeratutakoElementua",
+          JSON.stringify(elementuEguneratua),
+        );
+        alert("Aldaketak ondo gorde dira!");
+        window.location.href = "../gestion/ikusi.html";
+      }
+    });
+
+    eBotoiak.appendChild(btnAtzera);
+    eBotoiak.appendChild(btnGorde);
+  }
 }
