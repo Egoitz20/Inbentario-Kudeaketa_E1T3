@@ -17,7 +17,13 @@ document.getElementById("atzera").addEventListener("click", atzera);
 
 async function atzera() {
     try {
-        window.location.href = "../baliabideak.html";
+        let rola = sessionStorage.getItem("rol");
+
+        if (rola === "admin") {
+            window.location.href = "../baliabideak.html";
+        } else {
+            window.location.href = "../pages/baliabideak.html";
+        }
 
     } catch (error) {
         console.log(error);
@@ -26,4 +32,4 @@ async function atzera() {
 }
 
 const erabIzena = sessionStorage.getItem("erab");
-document.getElementById("erabIzena").textContent = erabIzena ;
+document.getElementById("erabIzena").textContent = erabIzena;

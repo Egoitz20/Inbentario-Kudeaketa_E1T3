@@ -55,8 +55,8 @@ function navbar() {
   let divUser = document.createElement("div");
   let user = document.createElement("img");
   user.src = window.location.origin + "/img/user.svg";
-  user.id = "logout";
-  user.addEventListener("click", logout);
+  user.id = "erabPantaila";
+  user.addEventListener("click", erabPantaila);
 
   divUser.appendChild(user);
   ul.appendChild(divUser);
@@ -69,10 +69,9 @@ async function erabPantaila() {
     let rola = sessionStorage.getItem("rol");
 
     if (rola === "admin") {
-      window.location.origin + "/admin/adminPantaila.html";
+      window.location.href = "../pages/admin/adminPantaila.html";
     } else {
-      sessionStorage.removeItem("rol");
-      window.location.origin + "index.html";
+      window.location.href = "../pages/userPantaila.html";
     }
   } catch (error) {
     console.log(error);

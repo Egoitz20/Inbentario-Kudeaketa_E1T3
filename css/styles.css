@@ -11,14 +11,32 @@
 }
 
 /* Orokorrak */
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
-  background-color: #f7f8fc;
-  color: #333333;
+  color: #222;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+img {
+  max-width: 100%;
 }
 
 /* Login */
+
 .bodyLogin {
   min-height: 100vh;
   min-height: 100dvh;
@@ -146,10 +164,6 @@ body {
 /* Navbar */
 ul {
   list-style: none;
-/* Hasiera Pantaila B */
-ul.nav,
-header ul {
-  list-style-type: none;
   margin: 0;
   padding: 0;
   background-color: var(--navbar);
@@ -204,7 +218,7 @@ ul li a:hover {
   transition: background-color var(--trantsizioa);
 }
 
-#logout:hover {
+#erabPantaila:hover {
   cursor: pointer;
   background-color: var(--printzipala);
 }
@@ -476,8 +490,7 @@ h4.adminErab {
   font-size: 20px;
 }
 
-/* ----------------- Elementu deskribapen pantaila (ikusi.html) ----------------- */
-
+/* Ikusi */
 .baliabideInfo {
   max-width: 1700px;
   margin: 40px auto;
