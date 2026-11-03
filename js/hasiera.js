@@ -81,6 +81,7 @@ async function erabPantaila() {
 
 function footer() {
   let footer = document.getElementById("footer");
+  if (!footer) return;
 
   footer.classList.add("foo");
 
