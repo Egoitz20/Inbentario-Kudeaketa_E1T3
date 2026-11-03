@@ -18,6 +18,7 @@ body {
   color: #333333;
 }
 
+/* Login */
 .bodyLogin {
   min-height: 100vh;
   min-height: 100dvh;
@@ -112,9 +113,8 @@ body {
 }
 
 /* Botoiak */
-#sartu,
-#sortu,
-#logout {
+.btnPrintzipalak
+{
   border: none;
   background-color: var(--printzipala);
   color: var(--zuria);
@@ -129,19 +129,23 @@ body {
     box-shadow var(--trantsizioa);
 }
 
-#sartu:hover,
-#sortu:hover,
-#logout:hover {
+.btnPrintzipalak:hover {
   background-color: var(--navbar);
   box-shadow: 0 4px 12px rgba(92, 92, 255, 0.2);
 }
 
-#sartu:active,
-#sortu:active,
-#logout:active {
+.btnPrintzipalak:active {
   transform: scale(0.97);
 }
 
+.btnPrintzipalak:focus-visible {
+  outline: 3px solid var(--navbar);
+  outline-offset: 3px;
+}
+
+/* Navbar */
+ul {
+  list-style: none;
 /* Hasiera Pantaila B */
 ul.nav,
 header ul {

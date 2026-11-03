@@ -30,6 +30,7 @@ async function saioaHasi() {
 
         if (respuesta.ok === true) {
             sessionStorage.setItem("rol", resultado.rol);
+            sessionStorage.setItem("erab", resultado.username);
             if (resultado.rol === "admin") {
                 window.location.href = "pages/baliabideak.html";
             } else {

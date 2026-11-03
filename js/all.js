@@ -1,5 +1,6 @@
 "use strict";
 import { elementuakHartu } from "./api.js";
+import { ezabatuBtn } from "./api.js";
 
 // **********************************************************************************************************************************************************
 // *************************************************************** PAGES JS *********************************************************************************
@@ -39,8 +40,10 @@ async function hasieratu() {
 
 // Función para crear las txartelas dinamicamnete por cada elemento que se traiga de la BBD
 function sortuTxartelaElementua(elementua) {
+  const rutaPHP = document.body.dataset.endpoint;
   const divTxartela = document.createElement("div");
   divTxartela.classList.add("txartela");
+  divTxartela.id = elementua.id;
 
   const img = document.createElement("img");
   // Si no tiene una imagen que trae desde la base de datos, se pone una por defecto
@@ -81,6 +84,9 @@ function sortuTxartelaElementua(elementua) {
     btnEzabatu.type = "button";
     btnEzabatu.textContent = "Ezabatu";
     btnEzabatu.className = "btn-accion";
+    btnEzabatu.addEventListener("click", () => {
+      ezabatuBtn(rutaPHP, divTxartela);
+    });
 
     divTxartela.appendChild(btnEditatu);
     divTxartela.appendChild(btnEzabatu);
