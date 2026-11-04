@@ -223,6 +223,9 @@ function sortuBilatzailea() {
     btnSortu.textContent = "Sortu";
     btnSortu.className = "btn-accion btn-sortu";
     bilaketaBlokea.appendChild(btnSortu);
+    btnSortu.addEventListener("click", () => {
+      window.location.href = "./admin/sortu.html";
+    });
   }
 
   // Añadirlos al bloque

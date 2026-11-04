@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="eu">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="../../img/logotxikia.jpeg">
+    <title>Sortu</title>
+    <link rel="stylesheet" href="../../css/styles.css" />
+    <script src="../../js/hasiera.js" defer></script>
+</head>
+
+<body>
+    <header id="navbar"></header>
+
+    <main>
+        <div class="baliabideInfo sortuInfo">
+            <div id="elementuTitulua">
+                <h1>Sortu</h1>
+            </div>
+
+            <div id="elementuOsagaiak">
+                <form id="sortuFormularioa">
+                    <div class="sortuInput">
+                        <label for="izena">Izena</label>
+                        <input type="text" id="izena" name="izena">
+                    </div>
+                    <div class="sortuInput">
+                        <label for="deskribapena">Deskribapena</label>
+                        <textarea id="deskribapena" name="deskribapena"></textarea>
+                    </div>
+                    <div class="sortuInput">
+                        <label for="marka">Marka</label>
+                        <input type="text" id="marka" name="marka">
+                    </div>
+                    <div class="sortuInput">
+                        <label for="modeloa">Modeloa</label>
+                        <input type="text" id="modeloa" name="modeloa">
+                    </div>
+                </form>
+            </div>
+
+            <div id="elementuIrudia">
+                <img src="../../img/logotxikia.jpeg" alt="...">
+            </div>
+
+            <div id="elementuBotoiak">
+                <button type="button" class="btn-atzera" onclick="history.back()">← Atzera</button>
+                <button type="button" id="sortu" class="btnPrintzipalak">
+                    SORTU
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <footer id="footer"></footer>
+</body>
+
+</html>

@@ -131,8 +131,7 @@ img {
 }
 
 /* Botoiak */
-.btnPrintzipalak
-{
+.btnPrintzipalak {
   border: none;
   background-color: var(--printzipala);
   color: var(--zuria);
@@ -609,4 +608,26 @@ h4.adminErab {
 
 .btn-atzera:active {
   transform: translateY(0);
+}
+
+/* Sortu */
+.sortuInput {
+  background-color: transparent;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sortuInput  {
+  background-color: #f8f9fa;
+  padding: 14px 18px;
+  border-radius: 8px;
+  font-size: 16px;
+  color: #333333;
+  line-height: 1.5;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
 }
