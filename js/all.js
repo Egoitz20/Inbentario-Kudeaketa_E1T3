@@ -113,10 +113,13 @@ function sortuTxartelaElementua(elementua) {
     window.location.href = getPagesBase() + "gestion/ikusi.html";
   });
 
+  const akzioak = document.createElement("div");
+  akzioak.className = "akzioak";
+  akzioak.appendChild(btn);
+
   divTxartela.appendChild(img);
   divTxartela.appendChild(hr);
   divTxartela.appendChild(p);
-  divTxartela.appendChild(btn);
 
   // Mira que el rol guardado en la sesion sea admin, y muestra el boton editatu e ikusi
   const rol = sessionStorage.getItem("rol");
@@ -145,10 +148,11 @@ function sortuTxartelaElementua(elementua) {
       ezabatuBtn(rutaPHP, divTxartela);
     });
 
-    divTxartela.appendChild(btnEditatu);
-    divTxartela.appendChild(btnEzabatu);
+    akzioak.appendChild(btnEditatu);
+    akzioak.appendChild(btnEzabatu);
   }
 
+  divTxartela.appendChild(akzioak);
   return divTxartela;
 }
 
@@ -209,7 +213,7 @@ function sortuOrrikatzeBotoiak() {
   // Generación del boton "Anterior"
   const btnAurrekoa = document.createElement("input");
   btnAurrekoa.type = "button";
-  btnAurrekoa.value = "Aurrekoa";
+  btnAurrekoa.value = "<";
   btnAurrekoa.disabled = oraingoOrria === 1; // Si nos encontramos en la primera página, se deshabilita el boton
   btnAurrekoa.addEventListener("click", () => orrikatu(oraingoOrria - 1)); // Al pulsar el boton retrocede una página
 
@@ -220,7 +224,7 @@ function sortuOrrikatzeBotoiak() {
   // Generación del boton "Siguiente"
   const btnHurrengoa = document.createElement("input");
   btnHurrengoa.type = "button";
-  btnHurrengoa.value = "Hurrengoa";
+  btnHurrengoa.value = ">";
   btnHurrengoa.disabled = oraingoOrria === orriTotalak;
   btnHurrengoa.addEventListener("click", () => orrikatu(oraingoOrria + 1));
 
