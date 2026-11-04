@@ -25,6 +25,38 @@ let oraingoOrria = 1; // Variable para definir la página actual en la que se en
 const orrikoTxartelLimitea = 9; // Variable dedicada para definir el limite de txartelas que tiene que haber por pagina.
 let filtratutakoElementuak = []; // guarda los elementos que contenagn el nombre buscado desde el buscador
 
+
+const kategoriaIrudiak = {
+  1: "../img/PORTATIL.png",
+  2: "../img/PC.png",
+  3: "../img/MONITOR.png",
+  4: "../img/TECLADO.svg",
+  5: "../img/RATON.png",
+  6: "../img/PROYECTOR.png",
+  7: "../img/PANTALLA INTERACTIVA.png",
+  8: "../img/IMPRESORA.jpg",
+  9: "../img/ROUTER.svg",
+  10: "../img/SWITCH.png",
+  11: "../img/PUNTO DE ACCESO DE WIFI.png",
+  12: "../img/TABLET.png",
+  13: "../img/SERVIDOR.png",
+  14: "../img/SAI.png",
+  15: "../img/WEBCAM.png",
+  16: "../img/AURICULARES.jpg",
+  17: "../img/ALTAVOCES.png",
+  18: "../img/DISCO DURO.png",
+  19: "../img/MICROFONO.jpg",
+  20: "../img/HUB Y ADAPTADORES.jpg",
+};
+
+function irudiaKategoriaLortu(elementua) {
+  const kategoriaId = Number(
+    elementua.kategoriaId ?? elementua.kategoriaID ?? elementua.kategoria_id ?? 0
+  );
+
+  return kategoriaIrudiak[kategoriaId] || elementua.irudia || "../img/logotxikia.jpeg";
+}
+
 // ----------------------------------------------------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------ HORRI HASIERA -------------------------------------------------------------------------------
 // ----------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -56,8 +88,8 @@ function sortuTxartelaElementua(elementua) {
   divTxartela.id = elementua.id;
 
   const img = document.createElement("img");
-  // Si no tiene una imagen que trae desde la base de datos, se pone una por defecto
-  img.src = elementua.irudia || "../img/logotxikia.jpeg";
+  img.src = irudiaKategoriaLortu(elementua);
+  img.alt = elementua.izena || "Elementua";
 
   const hr = document.createElement("hr");
 
