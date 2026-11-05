@@ -584,6 +584,8 @@ h4.adminErab {
   margin-top: 10px;
   display: flex;
   justify-content: flex-start;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 
 .btn-atzera {
@@ -663,4 +665,75 @@ h4.adminErab {
 .sortuInfo #elementuBotoiak {
   gap: 15px;
   align-items: center;
+.btn-gorde {
+  background-color: #28a745;
+}
+
+.btn-gorde:hover {
+  background-color: #218838;
+}
+
+/* ----------------- Elementu editatu pantaila (editatu.html) ----------------- */
+
+#elementuTituluaEditatu {
+  grid-area: titulua;
+  border-bottom: 2px solid #eef0f5;
+  padding-bottom: 15px;
+  margin-bottom: 5px;
+}
+
+#elementuTituluaEditatu h1 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: #2c3e50;
+}
+
+#elementuOsagaiakEditatu {
+  grid-area: osagaiak;
+}
+
+.editTaldea {
+  display: flex;
+  flex-direction: column;
+  margin-top: 12px;
+}
+
+.editTaldea label,
+.editatuOsagaiak label {
+  font-size: 14px;
+  font-weight: 700;
+  color: #4a5568;
+  margin-bottom: 6px;
+}
+
+.inputsEditatu {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--grisa2);
+  border-radius: 8px;
+  font-size: 15px;
+  font-family: inherit;
+  background-color: var(--zuria);
+  box-sizing: border-box;
+  transition:
+    border-color var(--trantsizioa),
+    box-shadow var(--trantsizioa);
+}
+
+.inputsEditatu:focus {
+  outline: none;
+  border-color: var(--printzipala);
+  box-shadow: 0 0 0 3px rgba(92, 92, 255, 0.15);
+}
+
+.textareaEditatu {
+  resize: vertical;
+  min-height: 85px;
+  line-height: 1.4;
+}
+
+.editatuOsagaiak li {
+  display: flex;
+  flex-direction: column;
 }

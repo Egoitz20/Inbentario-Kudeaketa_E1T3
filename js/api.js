@@ -64,6 +64,7 @@ export async function sortuBtn(rutaPHP, elementuBerria) {
   }
 }
 
+// Funcion para borrar los elementos
 export async function ezabatuBtn(rutaPHP, divTxartela) {
   const id = divTxartela.id;
 
@@ -72,14 +73,13 @@ export async function ezabatuBtn(rutaPHP, divTxartela) {
 
   try {
     if (confirm("Ezabaketa konfirmatu") == true) {
-
       const respuesta = await fetch(elementuURL, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ id: id, ekintza: "ezabatu" }),
-        credentials: "include"
+        credentials: "include",
       });
 
       if (!respuesta.ok) {
@@ -99,9 +99,42 @@ export async function ezabatuBtn(rutaPHP, divTxartela) {
     } else {
       return;
     }
-
   } catch (error) {
     console.error(error);
     alert("Errorea ezabaketa egiterakoan.");
+  }
+}
+
+// Función para actualizar los datos de un elemento mediante PUT a la API
+export async function elementuaEguneratu(rutaPHP, id, datuak) {
+  const elementuURL = `${apiUrl}${rutaPHP}?id=${id}`;
+
+  try {
+    const erantzuna = await fetch(elementuURL, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify(datuak),
+    });
+
+    if (erantzuna.status === 401) {
+      alert("Saioa hasi behar duzu lehenengo.");
+      window.location.href = window.location.origin + "/index.html";
+      return null;
+    }
+
+    if (!respuesta.ok) {
+      console.log(respuesta);
+      throw new Error("Errorea zerbitzariarekin konektatzean.");
+    }
+
+    return await erantzuna.json();
+    
+  } catch (error) {
+    console.error("API Errorea eguneratzerakoan:", error);
+    alert(error.message || "Errorea aldaketak gordetzean.");
+    return null;
   }
 }
