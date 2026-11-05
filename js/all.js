@@ -49,12 +49,69 @@ const kategoriaIrudiak = {
   20: "../img/HUB Y ADAPTADORES.jpg",
 };
 
+const kategoriaIrudiakIzenak = {
+  portatil: "../img/PORTATIL.png",
+  pc: "../img/PC.png",
+  sobremesa: "../img/PC.png",
+  monitor: "../img/MONITOR.png",
+  teclado: "../img/TECLADO.svg",
+  raton: "../img/RATON.png",
+  proyector: "../img/PROYECTOR.png",
+  "pantalla interactiva": "../img/PANTALLA INTERACTIVA.png",
+  impresora: "../img/IMPRESORA.jpg",
+  router: "../img/ROUTER.svg",
+  switch: "../img/SWITCH.png",
+  "punto de acceso wifi": "../img/PUNTO DE ACCESO DE WIFI.png",
+  tablet: "../img/TABLET.png",
+  servidor: "../img/SERVIDOR.png",
+  sai: "../img/SAI.png",
+  webcam: "../img/WEBCAM.png",
+  auriculares: "../img/AURICULARES.jpg",
+  altavoces: "../img/ALTAVOCES.png",
+  "disco duro": "../img/DISCO DURO.png",
+  microfono: "../img/MICROFONO.jpg",
+  hub: "../img/HUB Y ADAPTADORES.jpg",
+  adaptador: "../img/HUB Y ADAPTADORES.jpg",
+};
+
+function normalizeKategoriaIzena(izena = "") {
+  return izena
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9\s]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 function irudiaKategoriaLortu(elementua) {
   const kategoriaId = Number(
     elementua.kategoriaId ?? elementua.kategoriaID ?? elementua.kategoria_id ?? 0
   );
 
-  return kategoriaIrudiak[kategoriaId] || elementua.irudia || "../img/logotxikia.jpeg";
+  if (kategoriaIrudiak[kategoriaId]) {
+    return kategoriaIrudiak[kategoriaId];
+  }
+
+  const izena = elementua.izena || elementua.kategoria || elementua.nombre || "";
+  const izenaNormaliz = normalizeKategoriaIzena(izena);
+
+  if (izenaNormaliz) {
+    const izenaMatch = Object.keys(kategoriaIrudiakIzenak).find((clave) => {
+      const claveNormaliz = normalizeKategoriaIzena(clave);
+      return (
+        izenaNormaliz === claveNormaliz ||
+        izenaNormaliz.includes(claveNormaliz) ||
+        claveNormaliz.includes(izenaNormaliz)
+      );
+    });
+
+    if (izenaMatch) {
+      return kategoriaIrudiakIzenak[izenaMatch];
+    }
+  }
+
+  return elementua.irudia || "../img/logotxikia.jpeg";
 }
 
 // ----------------------------------------------------------------------------------------------------------------------------------------------------------
