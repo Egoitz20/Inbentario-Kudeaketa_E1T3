@@ -114,6 +114,30 @@ function irudiaKategoriaLortu(elementua) {
   return elementua.irudia || "../img/logotxikia.jpeg";
 }
 
+function irudiaGelaLortu(elementua) {
+  const izena = String(elementua.izena ?? elementua.nombre ?? "");
+  const izenaNormaliz = normalizeKategoriaIzena(izena);
+
+  if (izenaNormaliz.includes("almacen") || izenaNormaliz.includes("almacen")) {
+    return "../img/ALMACEN.png";
+  }
+
+  if (izenaNormaliz.includes("aula")) {
+    return "../img/AULA.png";
+  }
+
+  return "../img/aula.png";
+}
+
+function irudiaElementoLortu(elementua) {
+  const endpoint = document.body?.dataset?.endpoint || "";
+  if (endpoint === "gelak.php") {
+    return irudiaGelaLortu(elementua);
+  }
+
+  return irudiaKategoriaLortu(elementua);
+}
+
 // ----------------------------------------------------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------ HORRI HASIERA -------------------------------------------------------------------------------
 // ----------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -145,7 +169,7 @@ function sortuTxartelaElementua(elementua) {
   divTxartela.id = elementua.id;
 
   const img = document.createElement("img");
-  img.src = irudiaKategoriaLortu(elementua);
+  img.src = irudiaElementoLortu(elementua);
   img.alt = elementua.izena || "Elementua";
 
   const hr = document.createElement("hr");

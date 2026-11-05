@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 260" role="img" aria-label="Almacén">
+  <rect width="400" height="260" fill="#eef6ef"/>
+  <rect x="30" y="70" width="340" height="130" rx="12" fill="#dfeecf" stroke="#2d4a2f" stroke-width="6"/>
+  <rect x="60" y="102" width="280" height="26" rx="8" fill="#b7d7a8" stroke="#2d4a2f" stroke-width="3"/>
+  <g fill="#7aa56d" stroke="#2d4a2f" stroke-width="3">
+    <rect x="90" y="140" width="50" height="38" rx="4"/>
+    <rect x="150" y="140" width="50" height="38" rx="4"/>
+    <rect x="210" y="140" width="50" height="38" rx="4"/>
+    <rect x="270" y="140" width="50" height="38" rx="4"/>
+  </g>
+  <g fill="#2d4a2f">
+    <rect x="72" y="50" width="36" height="18" rx="8"/>
+    <rect x="290" y="50" width="38" height="18" rx="8"/>
+  </g>
+  <g stroke="#2d4a2f" stroke-width="5" stroke-linecap="round">
+    <path d="M85 90 L85 60"/>
+    <path d="M315 90 L315 60"/>
+  </g>
+</svg>

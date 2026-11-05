@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 260" role="img" aria-label="Aula">
+  <rect width="400" height="260" fill="#eaf2ff"/>
+  <rect x="20" y="40" width="360" height="170" rx="12" fill="#f3f7ff" stroke="#2c3e50" stroke-width="6"/>
+  <rect x="50" y="70" width="300" height="110" rx="8" fill="#d9ecff" stroke="#2c3e50" stroke-width="4"/>
+  <g fill="#6aa3d8">
+    <rect x="80" y="100" width="34" height="56" rx="4"/>
+    <rect x="126" y="100" width="34" height="56" rx="4"/>
+    <rect x="172" y="100" width="34" height="56" rx="4"/>
+    <rect x="218" y="100" width="34" height="56" rx="4"/>
+    <rect x="264" y="100" width="34" height="56" rx="4"/>
+  </g>
+  <g fill="#4b6b8a">
+    <rect x="60" y="190" width="280" height="12" rx="6"/>
+  </g>
+  <g fill="#2c3e50">
+    <rect x="70" y="210" width="70" height="18" rx="8"/>
+    <rect x="260" y="210" width="70" height="18" rx="8"/>
+  </g>
+  <g stroke="#2c3e50" stroke-width="5" stroke-linecap="round" fill="none">
+    <path d="M105 90 L105 58"/>
+    <path d="M150 90 L150 58"/>
+    <path d="M195 90 L195 58"/>
+    <path d="M240 90 L240 58"/>
+    <path d="M285 90 L285 58"/>
+  </g>
+</svg>
