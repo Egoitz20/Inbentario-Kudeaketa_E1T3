@@ -665,6 +665,8 @@ h4.adminErab {
 .sortuInfo #elementuBotoiak {
   gap: 15px;
   align-items: center;
+}
+
 .btn-gorde {
   background-color: #28a745;
 }
