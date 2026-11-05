@@ -131,8 +131,7 @@ img {
 }
 
 /* Botoiak */
-.btnPrintzipalak
-{
+.btnPrintzipalak {
   border: none;
   background-color: var(--printzipala);
   color: var(--zuria);
@@ -613,6 +612,59 @@ h4.adminErab {
   transform: translateY(0);
 }
 
+/*Sortu */
+.sortuInfo {
+  grid-template-areas:
+    "titulua titulua"
+    "osagaiak irudia"
+    "botoiak botoiak";
+}
+
+.sortuInput {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.sortuInput label {
+  font-size: 16px;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.sortuInput input,
+.sortuInput textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 14px 18px;
+  border: 1px solid var(--grisa2);
+  border-radius: 8px;
+  background-color: #f8f9fa;
+  font-size: 16px;
+  color: #333;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.sortuInput input:focus,
+.sortuInput textarea:focus {
+  border-color: var(--printzipala);
+}
+
+.sortuInput textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.sortuInfo #elementuIrudia {
+  min-height: 270px;
+}
+
+.sortuInfo #elementuBotoiak {
+  gap: 15px;
+  align-items: center;
 .btn-gorde {
   background-color: #28a745;
 }

@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="eu">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="../../img/logotxikia.jpeg">
+    <title>Sortu</title>
+    <link rel="stylesheet" href="../../css/styles.css" />
+    <script type="module" src="../../js/hasiera.js"></script>
+    <script type="module" src="../../js/all.js"></script>
+</head>
+
+<body>
+    <header id="navbar"></header>
+
+    <main>
+        <div class="baliabideInfo sortuInfo">
+            <div id="elementuTitulua">
+                <h1>Sortu</h1>
+            </div>
+
+            <div id="elementuOsagaiak">
+                <form id="sortuFormularioa">
+                    <div class="sortuInput">
+                        <label for="izena">Izena</label>
+                        <input type="text" id="izena" name="izena">
+                    </div>
+                    <div class="sortuInput">
+                        <label for="deskribapena">Deskribapena</label>
+                        <textarea id="deskribapena" name="deskribapena"></textarea>
+                    </div>
+                    <div class="sortuInput">
+                        <label for="marka">Marka</label>
+                        <input type="text" id="marka" name="marka">
+                    </div>
+                    <div class="sortuInput">
+                        <label for="modeloa">Modeloa</label>
+                        <input type="text" id="modeloa" name="modeloa">
+                    </div>
+                    <div class="sortuInput">
+                        <label for="kategoriaId">Kategoria</label>
+                        <select id="kategoriaId" name="kategoriaId" required>
+                            <option value="">Aukeratu kategoria</option>
+                            <option value="1">Portátil</option>
+                            <option value="2">Ordenador de sobremesa</option>
+                            <option value="3">Monitor</option>
+                            <option value="4">Teclado</option>
+                            <option value="5">Ratón</option>
+                            <option value="6">Proyector</option>
+                            <option value="7">Pantalla interactiva</option>
+                            <option value="8">Impresora</option>
+                            <option value="9">Router</option>
+                            <option value="10">Switch</option>
+                            <option value="11">Punto de acceso WiFi</option>
+                            <option value="12">Tablet</option>
+                            <option value="13">Servidor</option>
+                            <option value="14">SAI</option>
+                            <option value="15">Webcam</option>
+                            <option value="16">Auriculares</option>
+                            <option value="17">Altavoces</option>
+                            <option value="18">Disco duro externo</option>
+                            <option value="19">Micrófono</option>
+                            <option value="20">Hub y adaptadores</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+
+            <div id="elementuIrudia">
+                <img src="../../img/logotxikia.jpeg" alt="...">
+            </div>
+
+            <div id="elementuBotoiak">
+                <button type="button" class="btn-atzera" onclick="history.back()">← Atzera</button>
+                <button type="button" id="sortuForm" class="btnPrintzipalak">
+                    SORTU
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <footer id="footer"></footer>
+</body>
+
+</html>

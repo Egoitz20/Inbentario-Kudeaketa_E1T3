@@ -32,6 +32,38 @@ export async function elementuakHartu(rutaPHP) {
   }
 }
 
+export async function sortuBtn(rutaPHP, elementuBerria) {
+  const elementuURL = apiUrl + rutaPHP;
+
+  try {
+    const respuesta = await fetch(elementuURL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(elementuBerria),
+      credentials: "include"
+    });
+
+    if (!respuesta.ok) {
+        throw new Error("Errorea zerbitzariarekin konektatzean.");
+    }
+
+    const emaitza = await respuesta.json();
+
+    if (respuesta.ok) {
+      alert("Elementua ondo sortu da!");
+      window.location.reload();
+    } else {
+      alert("Ezin izan da elementua sortu.");
+    }
+
+  } catch (error) {
+    console.error(error);
+    alert("Errorea sorkuntza egiterakoan.");
+  }
+}
+
 // Funcion para borrar los elementos
 export async function ezabatuBtn(rutaPHP, divTxartela) {
   const id = divTxartela.id;

@@ -1,6 +1,7 @@
 "use strict";
 import { elementuakHartu } from "./api.js";
 import { ezabatuBtn } from "./api.js";
+import { sortuBtn } from "./api.js";
 import { elementuaEguneratu } from "./api.js";
 
 // **********************************************************************************************************************************************************
@@ -248,6 +249,9 @@ function sortuBilatzailea() {
     btnSortu.textContent = "Sortu";
     btnSortu.className = "btn-accion btn-sortu";
     bilaketaBlokea.appendChild(btnSortu);
+    btnSortu.addEventListener("click", () => {
+      window.location.href = "./admin/sortu.html";
+    });
   }
 
   // Añadirlos al bloque
@@ -547,3 +551,39 @@ function elementuaEditatuHasieratu() {
     eBotoiak.appendChild(btnGorde);
   }
 }
+
+// **********************************************************************************************************************************************************
+// ************************************************************** SORTU JS ********************************************************************************
+// **********************************************************************************************************************************************************
+
+const sortuForm = document.getElementById("sortuForm");
+
+if (sortuForm) {
+    sortuForm.addEventListener("click", elementuaSortu);
+}
+
+function elementuaSortu() {
+    const izena = document.getElementById("izena").value.trim();
+    const deskribapena = document.getElementById("deskribapena").value.trim();
+    const marka = document.getElementById("marka").value.trim();
+    const modeloa = document.getElementById("modeloa").value.trim();
+    const kategoriaId = document.getElementById("kategoriaId").value;
+
+    if (!izena || !deskribapena || !marka || !modeloa || !kategoriaId) {
+        alert("Mesedez, bete eremu guztiak.");
+        return;
+    }
+
+    const elementuBerria = {
+        kategoriaId: Number(kategoriaId),
+        izena,
+        deskribapena,
+        marka,
+        modeloa
+    };
+
+    console.log("Elementu berria:", elementuBerria);
+
+    sortuBtn("baliabideak.php", elementuBerria);
+}
+
