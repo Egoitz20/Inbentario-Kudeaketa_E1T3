@@ -206,14 +206,6 @@ function sortuOrrikatzeBotoiak() {
 function sortuBilatzailea() {
   const bilaketaBlokea = document.getElementById("bilaketaBlokea");
 
-  // Boton filtro
-  const btnFiltroa = document.createElement("button");
-  btnFiltroa.className = "btn-icono";
-  const imgFiltroa = document.createElement("img");
-  imgFiltroa.src = "../img/filtrar.png";
-  imgFiltroa.alt = "Filtraitu";
-  btnFiltroa.appendChild(imgFiltroa);
-
   // Campo buscador
   const bilatzailea = document.createElement("input");
   bilatzailea.type = "text";
@@ -255,7 +247,6 @@ function sortuBilatzailea() {
   }
 
   // Añadirlos al bloque
-  bilaketaBlokea.appendChild(btnFiltroa);
   bilaketaBlokea.appendChild(bilatzailea);
   bilaketaBlokea.appendChild(btnLupa);
 }
