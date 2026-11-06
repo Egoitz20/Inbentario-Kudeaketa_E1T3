@@ -26,6 +26,123 @@ let oraingoOrria = 1; // Variable para definir la página actual en la que se en
 const orrikoTxartelLimitea = 9; // Variable dedicada para definir el limite de txartelas que tiene que haber por pagina.
 let filtratutakoElementuak = []; // guarda los elementos que contenagn el nombre buscado desde el buscador
 
+
+const kategoriaIrudiak = {
+  1: "../img/PORTATIL.png",
+  2: "../img/PC.png",
+  3: "../img/MONITOR.png",
+  4: "../img/TECLADO.svg",
+  5: "../img/RATON.png",
+  6: "../img/PROYECTOR.png",
+  7: "../img/PANTALLA INTERACTIVA.png",
+  8: "../img/IMPRESORA.jpg",
+  9: "../img/ROUTER.svg",
+  10: "../img/SWITCH.png",
+  11: "../img/PUNTO DE ACCESO DE WIFI.png",
+  12: "../img/TABLET.png",
+  13: "../img/SERVIDOR.png",
+  14: "../img/SAI.png",
+  15: "../img/WEBCAM.png",
+  16: "../img/AURICULARES.jpg",
+  17: "../img/ALTAVOCES.png",
+  18: "../img/DISCO DURO.png",
+  19: "../img/MICROFONO.jpg",
+  20: "../img/HUB Y ADAPTADORES.jpg",
+};
+
+const kategoriaIrudiakIzenak = {
+  portatil: "../img/PORTATIL.png",
+  pc: "../img/PC.png",
+  sobremesa: "../img/PC.png",
+  monitor: "../img/MONITOR.png",
+  teclado: "../img/TECLADO.svg",
+  raton: "../img/RATON.png",
+  proyector: "../img/PROYECTOR.png",
+  "pantalla interactiva": "../img/PANTALLA INTERACTIVA.png",
+  impresora: "../img/IMPRESORA.jpg",
+  router: "../img/ROUTER.svg",
+  switch: "../img/SWITCH.png",
+  "punto de acceso wifi": "../img/PUNTO DE ACCESO DE WIFI.png",
+  tablet: "../img/TABLET.png",
+  servidor: "../img/SERVIDOR.png",
+  sai: "../img/SAI.png",
+  webcam: "../img/WEBCAM.png",
+  auriculares: "../img/AURICULARES.jpg",
+  altavoces: "../img/ALTAVOCES.png",
+  "disco duro": "../img/DISCO DURO.png",
+  microfono: "../img/MICROFONO.jpg",
+  hub: "../img/HUB Y ADAPTADORES.jpg",
+  adaptador: "../img/HUB Y ADAPTADORES.jpg",
+};
+
+const gelaIrudiak = {
+  almacen: "../img/ALMACEN.png",
+  aula: "../img/AULA.png",
+  "laboratorio de redes": "../img/LABORATORIO DE REDES.jpg",
+  "laboratorio de hardware": "../img/LABORATORIO DE HARDWARE.jpg",
+  "sala de servidores": "../img/SALA DE SERVIDORES.jpg",
+  "sala de profesores": "../img/SALA DE PROFESORES.jpg",
+  secretaria: "../img/SECRETARIA.jpg",
+  direccion: "../img/DIRECCION.jpg",
+  biblioteca: "../img/BIBLIOTECA.jpg",
+  "sala de reuniones": "../img/SALA DE REUNIONES.jpg",
+  "taller de electronica": "../img/TALLER DE ELECTRONICA.jpg",
+  "sala de informatica": "../img/SALA DE INFORMATICA.jpg",
+};
+
+function normalizeKategoriaIzena(izena = "") {
+  return String(izena)
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9\s]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function irudiaElementoLortu(elementua) {
+  const endpoint = document.body?.dataset?.endpoint || "";
+  const id = Number(
+    elementua?.kategoriaId ?? elementua?.kategoriaID ?? elementua?.kategoria_id ?? 0
+  );
+
+  const izena = String(elementua?.izena ?? elementua?.nombre ?? elementua?.kategoria ?? "");
+  const izenaNormaliz = normalizeKategoriaIzena(izena);
+
+  // 1) Si tiene ID, prioridad a categoría
+  if (id && kategoriaIrudiak[id]) {
+    return kategoriaIrudiak[id];
+  }
+
+  // 2) Si es una sala, busca por patrones
+  if (endpoint === "gelak.php") {
+    for (const [patron, ruta] of Object.entries(gelaIrudiak)) {
+      if (izenaNormaliz.includes(patron)) {
+        return ruta;
+      }
+    }
+    return "../img/aula.png";
+  }
+
+  // 3) Si es categoría, busca por nombre
+  if (izenaNormaliz) {
+    const match = Object.entries(kategoriaIrudiakIzenak).find(([clave]) => {
+      const claveNormaliz = normalizeKategoriaIzena(clave);
+      return (
+        izenaNormaliz === claveNormaliz ||
+        izenaNormaliz.includes(claveNormaliz) ||
+        claveNormaliz.includes(izenaNormaliz)
+      );
+    });
+
+    if (match) {
+      return match[1];
+    }
+  }
+
+  return elementua?.irudia || "../img/logotxikia.jpeg";
+}
+
 // ----------------------------------------------------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------ HORRI HASIERA -------------------------------------------------------------------------------
 // ----------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -57,8 +174,8 @@ function sortuTxartelaElementua(elementua) {
   divTxartela.id = elementua.id;
 
   const img = document.createElement("img");
-  // Si no tiene una imagen que trae desde la base de datos, se pone una por defecto
-  img.src = elementua.irudia || "../img/logotxikia.jpeg";
+  img.src = irudiaElementoLortu(elementua);
+  img.alt = elementua.izena || "Elementua";
 
   const hr = document.createElement("hr");
 
@@ -82,10 +199,13 @@ function sortuTxartelaElementua(elementua) {
     window.location.href = getPagesBase() + "gestion/ikusi.html";
   });
 
+  const akzioak = document.createElement("div");
+  akzioak.className = "akzioak";
+  akzioak.appendChild(btn);
+
   divTxartela.appendChild(img);
   divTxartela.appendChild(hr);
   divTxartela.appendChild(p);
-  divTxartela.appendChild(btn);
 
   // Mira que el rol guardado en la sesion sea admin, y muestra el boton editatu e ikusi
   const rol = sessionStorage.getItem("rol");
@@ -114,10 +234,11 @@ function sortuTxartelaElementua(elementua) {
       ezabatuBtn(rutaPHP, divTxartela);
     });
 
-    divTxartela.appendChild(btnEditatu);
-    divTxartela.appendChild(btnEzabatu);
+    akzioak.appendChild(btnEditatu);
+    akzioak.appendChild(btnEzabatu);
   }
 
+  divTxartela.appendChild(akzioak);
   return divTxartela;
 }
 
@@ -178,7 +299,7 @@ function sortuOrrikatzeBotoiak() {
   // Generación del boton "Anterior"
   const btnAurrekoa = document.createElement("input");
   btnAurrekoa.type = "button";
-  btnAurrekoa.value = "Aurrekoa";
+  btnAurrekoa.value = "<";
   btnAurrekoa.disabled = oraingoOrria === 1; // Si nos encontramos en la primera página, se deshabilita el boton
   btnAurrekoa.addEventListener("click", () => orrikatu(oraingoOrria - 1)); // Al pulsar el boton retrocede una página
 
@@ -189,7 +310,7 @@ function sortuOrrikatzeBotoiak() {
   // Generación del boton "Siguiente"
   const btnHurrengoa = document.createElement("input");
   btnHurrengoa.type = "button";
-  btnHurrengoa.value = "Hurrengoa";
+  btnHurrengoa.value = ">";
   btnHurrengoa.disabled = oraingoOrria === orriTotalak;
   btnHurrengoa.addEventListener("click", () => orrikatu(oraingoOrria + 1));
 
