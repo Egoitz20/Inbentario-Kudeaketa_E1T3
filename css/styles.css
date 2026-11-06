@@ -514,6 +514,7 @@ h4.adminErab {
 }
 
 #elementuTitulua,
+#elementuTituluaS,
 #elementuTituluaEditatu {
   grid-area: titulua;
   border-bottom: 2px solid var(--urdinaArgia);
@@ -522,6 +523,7 @@ h4.adminErab {
 }
 
 #elementuTitulua h1,
+#elementuTituluaS h1,
 #elementuTituluaEditatu h1 {
   margin: 0;
   font-size: 28px;
@@ -530,6 +532,7 @@ h4.adminErab {
 }
 
 #elementuOsagaiak,
+#elementuOsagaiakS,
 #elementuOsagaiakEditatu {
   grid-area: osagaiak;
 }
@@ -545,7 +548,7 @@ h4.adminErab {
   gap: 12px;
 }
 
-.elementuOsagaiak li {
+.elementuOsagaiak li{
   background-color: var(--grisaArgia);
   padding: 14px 18px;
   border-radius: 8px;
@@ -555,7 +558,8 @@ h4.adminErab {
   box-shadow: var(--itzala);
 }
 
-#elementuIrudia {
+#elementuIrudia,
+#elementuIrudiaS {
   grid-area: irudia;
   display: flex;
   justify-content: center;
@@ -588,7 +592,8 @@ h4.adminErab {
   color: var(--grisaIluna);
 }
 
-#elementuBotoiak {
+#elementuBotoiak,
+#elementuBotoiakS {
   grid-area: botoiak;
   margin-top: 10px;
   display: flex;
@@ -597,7 +602,7 @@ h4.adminErab {
   flex-wrap: wrap;
 }
 
-.btn-atzera {
+.btn-atzera{
   border: none;
   background-color: var(--printzipala);
   color: var(--zuria);
@@ -667,11 +672,11 @@ h4.adminErab {
   resize: vertical;
 }
 
-.sortuInfo #elementuIrudia {
+.sortuInfo #elementuIrudiaS {
   min-height: 270px;
 }
 
-.sortuInfo #elementuBotoiak {
+.sortuInfo #elementuBotoiakS {
   gap: 15px;
   align-items: center;
 }
