@@ -643,7 +643,7 @@ h4.adminErab {
 }
 
 .sortuInput input,
-.sortuInput textarea {
+.sortuInput textarea, select {
   width: 100%;
   padding: 14px 18px;
   border: 1px solid var(--grisa2);
@@ -657,7 +657,8 @@ h4.adminErab {
 }
 
 .sortuInput input:focus,
-.sortuInput textarea:focus {
+.sortuInput textarea:focus, 
+.sortuInput select:focus {
   border-color: var(--printzipala);
 }
 
@@ -726,4 +727,219 @@ h4.adminErab {
 .editatuOsagaiak li {
   display: flex;
   flex-direction: column;
+}
+
+/* Media Query */
+@media (max-width: 768px) {
+  .titulua {
+    grid-template-columns: 70px minmax(0, 1fr);
+    gap: 10px;
+    padding: 14px;
+  }
+
+  .logo {
+    width: 65px;
+    height: 55px;
+  }
+
+  .admin {
+    grid-template-columns: 80px minmax(0, 1fr);
+    gap: 16px;
+    padding: 0 16px;
+  }
+
+  img.adminErab {
+    width: 80px;
+    height: 80px;
+  }
+
+  #bilaketaBlokea {
+    padding: 0 15px;
+  }
+
+  #bilaketa {
+    width: 100%;
+    min-width: 0;
+  }
+
+  #txartelakBlokea {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .baliabideInfo {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "titulua"
+      "irudia"
+      "osagaiak"
+      "mugimenduak"
+      "botoiak";
+    margin: 20px 12px;
+    padding: 25px 20px;
+    gap: 20px;
+  }
+
+  .sortuInfo {
+    grid-template-areas:
+      "titulua"
+      "irudia"
+      "osagaiak"
+      "botoiak";
+  }
+
+  #elementuTitulua h1,
+  #elementuTituluaEditatu h1 {
+    font-size: 24px;
+  }
+
+  #elementuIrudia img {
+    max-height: 230px;
+  }
+
+  .formDiv {
+    width: calc(100% - 30px);
+    padding: 24px 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .bodyLogin {
+    padding: 12px;
+  }
+
+  .login {
+    padding: 7px;
+  }
+
+  .titulua {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 16px 10px;
+  }
+
+  .logo {
+    width: 65px;
+    height: 50px;
+  }
+
+  .titulua h1 {
+    font-size: 17px;
+  }
+
+  .formLogin {
+    gap: 18px;
+    margin: 25px 0;
+    padding: 0 8px;
+  }
+
+  .inputs {
+    width: 100%;
+  }
+
+  .nav {
+    grid-auto-flow: row;
+    gap: 4px;
+  }
+
+  ul li a {
+    padding: 12px;
+  }
+
+  .foo {
+    grid-auto-flow: row;
+    text-align: center;
+    gap: 8px;
+  }
+
+  .admin {
+    grid-template-columns: 65px minmax(0, 1fr);
+    gap: 12px;
+    margin: 20px auto;
+    padding: 0 12px;
+  }
+
+  img.adminErab {
+    width: 65px;
+    height: 65px;
+    padding: 8px;
+  }
+
+  h2.adminErab {
+    font-size: 17px;
+  }
+
+  h4.adminErab {
+    font-size: 14px;
+  }
+
+  .formDiv {
+    width: calc(100% - 24px);
+    margin: 20px auto;
+    padding: 20px 14px;
+  }
+
+  .adminTitulua {
+    gap: 8px;
+    margin-bottom: 22px;
+  }
+
+  .formDiv h2 {
+    font-size: 18px;
+  }
+
+  #sortu {
+    justify-self: stretch;
+    width: 100%;
+  }
+
+  #bilaketaBlokea {
+    gap: 6px;
+    margin: 20px 10px;
+    padding: 0;
+  }
+
+  #bilaketa {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  #txartelakBlokea {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    padding: 12px;
+  }
+
+  .baliabideInfo {
+    margin: 12px 8px;
+    padding: 18px 14px;
+    gap: 18px;
+  }
+
+  #elementuTitulua h1,
+  #elementuTituluaEditatu h1 {
+    font-size: 21px;
+  }
+
+  .elementuOsagaiak li,
+  #elementuMugimenduak ul li {
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  #elementuBotoiak {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn-atzera {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .sortuInput input,
+  .sortuInput textarea {
+    padding: 12px;
+  }
 }
