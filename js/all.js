@@ -74,8 +74,23 @@ const kategoriaIrudiakIzenak = {
   adaptador: "../img/HUB Y ADAPTADORES.jpg",
 };
 
+const gelaIrudiak = {
+  almacen: "../img/ALMACEN.png",
+  aula: "../img/AULA.png",
+  "laboratorio de redes": "../img/LABORATORIO DE REDES.jpg",
+  "laboratorio de hardware": "../img/LABORATORIO DE HARDWARE.jpg",
+  "sala de servidores": "../img/SALA DE SERVIDORES.jpg",
+  "sala de profesores": "../img/SALA DE PROFESORES.jpg",
+  secretaria: "../img/SECRETARIA.jpg",
+  direccion: "../img/DIRECCION.jpg",
+  biblioteca: "../img/BIBLIOTECA.jpg",
+  "sala de reuniones": "../img/SALA DE REUNIONES.jpg",
+  "taller de electronica": "../img/TALLER DE ELECTRONICA.jpg",
+  "sala de informatica": "../img/SALA DE INFORMATICA.jpg",
+};
+
 function normalizeKategoriaIzena(izena = "") {
-  return izena
+  return String(izena)
     .toLowerCase()
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
@@ -84,20 +99,33 @@ function normalizeKategoriaIzena(izena = "") {
     .trim();
 }
 
-function irudiaKategoriaLortu(elementua) {
-  const kategoriaId = Number(
-    elementua.kategoriaId ?? elementua.kategoriaID ?? elementua.kategoria_id ?? 0
+function irudiaElementoLortu(elementua) {
+  const endpoint = document.body?.dataset?.endpoint || "";
+  const id = Number(
+    elementua?.kategoriaId ?? elementua?.kategoriaID ?? elementua?.kategoria_id ?? 0
   );
 
-  if (kategoriaIrudiak[kategoriaId]) {
-    return kategoriaIrudiak[kategoriaId];
-  }
-
-  const izena = elementua.izena || elementua.kategoria || elementua.nombre || "";
+  const izena = String(elementua?.izena ?? elementua?.nombre ?? elementua?.kategoria ?? "");
   const izenaNormaliz = normalizeKategoriaIzena(izena);
 
+  // 1) Si tiene ID, prioridad a categoría
+  if (id && kategoriaIrudiak[id]) {
+    return kategoriaIrudiak[id];
+  }
+
+  // 2) Si es una sala, busca por patrones
+  if (endpoint === "gelak.php") {
+    for (const [patron, ruta] of Object.entries(gelaIrudiak)) {
+      if (izenaNormaliz.includes(patron)) {
+        return ruta;
+      }
+    }
+    return "../img/aula.png";
+  }
+
+  // 3) Si es categoría, busca por nombre
   if (izenaNormaliz) {
-    const izenaMatch = Object.keys(kategoriaIrudiakIzenak).find((clave) => {
+    const match = Object.entries(kategoriaIrudiakIzenak).find(([clave]) => {
       const claveNormaliz = normalizeKategoriaIzena(clave);
       return (
         izenaNormaliz === claveNormaliz ||
@@ -106,36 +134,12 @@ function irudiaKategoriaLortu(elementua) {
       );
     });
 
-    if (izenaMatch) {
-      return kategoriaIrudiakIzenak[izenaMatch];
+    if (match) {
+      return match[1];
     }
   }
 
-  return elementua.irudia || "../img/logotxikia.jpeg";
-}
-
-function irudiaGelaLortu(elementua) {
-  const izena = String(elementua.izena ?? elementua.nombre ?? "");
-  const izenaNormaliz = normalizeKategoriaIzena(izena);
-
-  if (izenaNormaliz.includes("almacen") || izenaNormaliz.includes("almacen")) {
-    return "../img/ALMACEN.png";
-  }
-
-  if (izenaNormaliz.includes("aula")) {
-    return "../img/AULA.png";
-  }
-
-  return "../img/aula.png";
-}
-
-function irudiaElementoLortu(elementua) {
-  const endpoint = document.body?.dataset?.endpoint || "";
-  if (endpoint === "gelak.php") {
-    return irudiaGelaLortu(elementua);
-  }
-
-  return irudiaKategoriaLortu(elementua);
+  return elementua?.irudia || "../img/logotxikia.jpeg";
 }
 
 // ----------------------------------------------------------------------------------------------------------------------------------------------------------
