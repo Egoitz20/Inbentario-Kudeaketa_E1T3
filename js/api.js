@@ -32,35 +32,38 @@ export async function elementuakHartu(rutaPHP) {
   }
 }
 
-export async function sortuBtn(rutaPHP, elementuBerria) {
-  const elementuURL = apiUrl + rutaPHP;
+export async function sortuBtn(rutaPHP, elementuBerria, paginaRetorno) {
 
   try {
-    const respuesta = await fetch(elementuURL, {
+    const respuesta = await fetch(apiUrl + rutaPHP, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
-      body: JSON.stringify(elementuBerria),
-      credentials: "include"
+      credentials: "include",
+      body: JSON.stringify(elementuBerria)
     });
-
-    if (!respuesta.ok) {
-        throw new Error("Errorea zerbitzariarekin konektatzean.");
-    }
 
     const emaitza = await respuesta.json();
 
-    if (respuesta.ok) {
-      alert("Elementua ondo sortu da!");
-      window.location.reload();
-    } else {
-      alert("Ezin izan da elementua sortu.");
+    if (!respuesta.ok) {
+      throw new Error(
+        emaitza.mezua ||
+        emaitza.message ||
+        emaitza.error ||
+        "Ezin izan da elementua sortu."
+      );
     }
 
+    alert("Elementua ondo sortu da!");
+
+    window.location.href = paginaRetorno;
+
   } catch (error) {
-    console.error(error);
-    alert("Errorea sorkuntza egiterakoan.");
+
+    console.error("Errorea:", error);
+
+    alert(error.message || "Errorea sorkuntza egiterakoan.");
   }
 }
 
@@ -131,7 +134,7 @@ export async function elementuaEguneratu(rutaPHP, id, datuak) {
     }
 
     return await erantzuna.json();
-    
+
   } catch (error) {
     console.error("API Errorea eguneratzerakoan:", error);
     alert(error.message || "Errorea aldaketak gordetzean.");

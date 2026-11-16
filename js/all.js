@@ -363,7 +363,9 @@ function sortuBilatzailea() {
     btnSortu.className = "btn-accion btn-sortu";
     bilaketaBlokea.appendChild(btnSortu);
     btnSortu.addEventListener("click", () => {
-      window.location.href = "./admin/sortu.html";
+      const endpoint = document.body.dataset.endpoint;
+      const tipo = endpoint.replace(".php", "");
+      window.location.href = `./admin/sortu.html?tipo=${tipo}`;
     });
   }
 
@@ -668,34 +670,275 @@ function elementuaEditatuHasieratu() {
 // ************************************************************** SORTU JS ********************************************************************************
 // **********************************************************************************************************************************************************
 
-const sortuForm = document.getElementById("sortuForm");
+const konfigurazioa = {
 
-if (sortuForm) {
-    sortuForm.addEventListener("click", elementuaSortu);
-}
+  // 1. BALIABIDEAK
+  baliabideak: {
+    izenburua: "Baliabidea sortu",
+    endpoint: "baliabideak.php",
 
-function elementuaSortu() {
-    const izena = document.getElementById("izena").value.trim();
-    const deskribapena = document.getElementById("deskribapena").value.trim();
-    const marka = document.getElementById("marka").value.trim();
-    const modeloa = document.getElementById("modeloa").value.trim();
-    const kategoriaId = document.getElementById("kategoriaId").value;
+    campos: [
+      {
+        id: "izena",
+        label: "Izena",
+        type: "text",
+        required: true
+      },
+      {
+        id: "deskribapena",
+        label: "Deskribapena",
+        type: "textarea",
+        required: true
+      },
+      {
+        id: "marka",
+        label: "Marka",
+        type: "text",
+        required: true
+      },
+      {
+        id: "modeloa",
+        label: "Modeloa",
+        type: "text",
+        required: true
+      },
+      {
+        id: "kategoriaId",
+        label: "Kategoria",
+        type: "select",
+        required: true,
 
-    if (!izena || !deskribapena || !marka || !modeloa || !kategoriaId) {
-        alert("Mesedez, bete eremu guztiak.");
-        return;
+        options: [
+          ["1", "Portátil"],
+          ["2", "Ordenador de sobremesa"],
+          ["3", "Monitor"],
+          ["4", "Teclado"],
+          ["5", "Ratón"],
+          ["6", "Proyector"],
+          ["7", "Pantalla interactiva"],
+          ["8", "Impresora"],
+          ["9", "Router"],
+          ["10", "Switch"],
+          ["11", "Punto de acceso WiFi"],
+          ["12", "Tablet"],
+          ["13", "Servidor"],
+          ["14", "SAI"],
+          ["15", "Webcam"],
+          ["16", "Auriculares"],
+          ["17", "Altavoces"],
+          ["18", "Disco duro externo"],
+          ["19", "Micrófono"],
+          ["20", "Hub y adaptadores"]
+        ]
+      }
+    ]
+  },
+
+  // 2. GAILUAK
+  gailuak: {
+    izenburua: "Gailua sortu",
+    endpoint: "gailuak.php",
+
+    campos: [
+      {
+        id: "baliabideId",
+        label: "Baliabidearen ID",
+        type: "number",
+        required: true
+      },
+      {
+        id: "etiketa",
+        label: "Etiketa",
+        type: "text",
+        required: true
+      },
+      {
+        id: "erosketaData",
+        label: "Erosketa data",
+        type: "date"
+      },
+      {
+        id: "egoera",
+        label: "Egoera",
+        type: "select",
+
+        options: [
+          ["Operatiboa", "Operatiboa"],
+          ["Matxuratua", "Matxuratua"],
+          ["Baja", "Baja"]
+        ]
+      }
+    ]
+  },
+
+  // 3. KATEGORIAK
+  kategoriak: {
+    izenburua: "Kategoria sortu",
+    endpoint: "kategoriak.php",
+
+    campos: [
+      {
+        id: "izena",
+        label: "Izena",
+        type: "text",
+        required: true
+      }
+    ]
+  },
+
+  // 4. GELAK
+  gelak: {
+    izenburua: "Gela sortu",
+    endpoint: "gelak.php",
+
+    campos: [
+      {
+        id: "izena",
+        label: "Izena",
+        type: "text",
+        required: true
+      },
+      {
+        id: "taldea",
+        label: "Taldea",
+        type: "text"
+      }
+    ]
+  },
+
+  // 5. MUGIMENDUAK
+  mugimenduak: {
+    izenburua: "Mugimendua sortu",
+    endpoint: "mugimenduak.php",
+
+    campos: [
+      {
+        id: "gelaId",
+        label: "Gela ID",
+        type: "number",
+        required: true
+      },
+      {
+        id: "gailuId",
+        label: "Gailu ID",
+        type: "number",
+        required: true
+      },
+      {
+        id: "hasieraData",
+        label: "Hasiera data",
+        type: "date"
+      }
+    ]
+  }
+};
+
+// Formulario mota
+const parametros = new URLSearchParams(window.location.search);
+
+const tipo = parametros.get("tipo");
+
+const config = konfigurazioa[tipo];
+
+const formularioa = document.getElementById("sortuFormularioaS");
+
+const titulua = document.getElementById("sortuIzenburua");
+
+if (!config) {
+  titulua.textContent = "Errorea";
+  formularioa.innerHTML =
+    "<p>Ez da formulario mota zuzena.</p>";
+
+} else {
+
+  titulua.textContent = config.izenburua;
+
+  // GENERAR LOS CAMPOS DINÁMICAMENTE
+  config.campos.forEach(campo => {
+    const div = document.createElement("div");
+    div.className = "sortuInput";
+
+    // LABEL
+    const label = document.createElement("label");
+    label.htmlFor = campo.id;
+    label.textContent = campo.label;
+
+    // INPUT
+    let input;
+    if (campo.type === "textarea") {
+      input = document.createElement("textarea");
+
+    } else if (campo.type === "select") {
+      input = document.createElement("select");
+      // Primera opción
+      const opcionInicial = document.createElement("option");
+      opcionInicial.value = "";
+      opcionInicial.textContent = "Aukeratu";
+      input.appendChild(opcionInicial);
+
+      // Opciones del select
+      campo.options.forEach(([valor, texto]) => {
+        const opcion = document.createElement("option");
+        opcion.value = valor;
+        opcion.textContent = texto;
+        input.appendChild(opcion);
+      });
+
+    } else {
+      input = document.createElement("input");
+      input.type = campo.type;
     }
 
-    const elementuBerria = {
-        kategoriaId: Number(kategoriaId),
-        izena,
-        deskribapena,
-        marka,
-        modeloa
-    };
+    input.id = campo.id;
+    input.name = campo.id;
+    input.required = campo.required ?? false;
 
-    console.log("Elementu berria:", elementuBerria);
+    // Añadir elementos al formulario
+    div.appendChild(label);
+    div.appendChild(input);
+    formularioa.appendChild(div);
+  });
 
-    sortuBtn("baliabideak.php", elementuBerria);
+  // ENVIAR EL FORMULARIO
+  formularioa.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    // Validar campos obligatorios
+    if (!formularioa.reportValidity()) {
+      return;
+    }
+
+    // Recoger los datos
+    const datos = {};
+
+    config.campos.forEach(campo => {
+
+      const input = document.getElementById(campo.id);
+      let valor = input.value.trim();
+
+      // Convertir números
+      if (campo.type === "number" && valor !== "") {
+        valor = Number(valor);
+      }
+
+      // No enviar campos opcionales vacíos
+      if (valor !== "") {
+        datos[campo.id] = valor;
+      }
+
+    });
+
+    // Endpoint correspondiente
+    const endpoint = config.endpoint;
+
+    // Página a la que volver después de crear
+    const paginaRetorno = "../" + tipo + ".html";
+
+    // console.log("Datos enviados:", datos);
+    // console.log("Endpoint:", endpoint);
+
+    // Crear elemento
+    await sortuBtn(endpoint, datos, paginaRetorno);
+  });
+
 }
-
