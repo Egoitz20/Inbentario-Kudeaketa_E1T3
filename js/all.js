@@ -190,12 +190,12 @@ function sortuTxartelaElementua(elementua) {
 
   // al hacer click sobre el boton, guarda el elemento y redirige
   btn.addEventListener("click", () => {
-    // Se convierte el objeto a texto JSON y se guarda en sessionStorage
     sessionStorage.setItem("aukeratutakoElementua", JSON.stringify(elementua));
-    sessionStorage.setItem(
-      "aukeratutakoEndpoint",
-      rutaPHP || "baliabideak.php",
-    );
+    sessionStorage.setItem("aukeratutakoEndpoint", rutaPHP || "baliabideak.php");
+
+    // Guardar el tipo de tabla
+    const tipoTabla = (rutaPHP || "baliabideak.php").replace(".php", "");
+    sessionStorage.setItem("elementuMota", tipoTabla);
     window.location.href = getPagesBase() + "gestion/ikusi.html";
   });
 
@@ -407,10 +407,9 @@ if (document.getElementById("elementuTituluaEditatu")) {
 
 function elementuaErrekuperatu() {
   const datuakString = sessionStorage.getItem("aukeratutakoElementua");
+  const mota = sessionStorage.getItem("elementuMota");
 
-  // Si no hay datos guardados en el sessionStorage, se sale de la función
-  if (!datuakString) return;
-
+  if (!datuakString || !mota) return;
   const elementua = JSON.parse(datuakString);
 
   const eTitulua = document.getElementById("elementuTitulua");
@@ -418,58 +417,107 @@ function elementuaErrekuperatu() {
   const eIrudia = document.getElementById("elementuIrudia");
   const eMugimenduak = document.getElementById("elementuMugimenduak");
 
-  // Titulo
+  if (!eTitulua || !eOsagaiak) return;
+
+  eTitulua.innerHTML = "";
+  eOsagaiak.innerHTML = "";
+  eIrudia.innerHTML = "";
+  eMugimenduak.innerHTML = "";
+
+  const configuracion = {
+    baliabideak: {
+      titulo: elementua.izena,
+      campos: ["deskribapena", "marka", "modeloa", "kategoriaId"],
+      imagen: true
+    },
+
+    gailuak: {
+      titulo: elementua.etiketa,
+      campos: ["baliabideId", "etiketa", "erosketaData", "egoera"]
+    },
+
+    kategoriak: {
+      titulo: elementua.izena,
+      campos: ["izena"]
+    },
+
+    gelak: {
+      titulo: elementua.izena,
+      campos: ["izena", "taldea"]
+    },
+
+    mugimenduak: {
+      titulo: "Mugimendua",
+      campos: ["gelaId", "gailuId", "hasieraData"]
+    }
+
+  };
+
+  const config = configuracion[mota];
+
+  if (!config) return;
+
+  // Izenburua
   const h1 = document.createElement("h1");
-  h1.textContent = elementua.izena;
+  h1.textContent = config.titulo || "Elementua";
   eTitulua.appendChild(h1);
 
-  // Lista los componentes del elemento
-  const ulOsagaiak = document.createElement("ul");
-  ulOsagaiak.classList.add("elementuOsagaiak");
+  // Eremuak
+  const ul = document.createElement("ul");
+  ul.classList.add("elementuOsagaiak");
 
-  const liDeskribapena = document.createElement("li");
-  liDeskribapena.classList.add("deskribapena");
-  liDeskribapena.textContent = `Deskribapena: ${elementua.deskribapena || "Ez dago"}`;
+  config.campos.forEach(campo => {
 
-  const liMarka = document.createElement("li");
-  liMarka.classList.add("marka");
-  liMarka.textContent = `Marka: ${elementua.marka || "Ez dago"}`;
+    const li = document.createElement("li");
+    const valor = elementua[campo] ?? "Ez dago";
 
-  const liModeloa = document.createElement("li");
-  liModeloa.classList.add("modeloa");
-  liModeloa.textContent = `Modeloa: ${elementua.modeloa || "Ez dago"}`;
+    li.textContent = `${campo}: ${valor}`;
 
-  ulOsagaiak.appendChild(liDeskribapena);
-  ulOsagaiak.appendChild(liMarka);
-  ulOsagaiak.appendChild(liModeloa);
-  eOsagaiak.appendChild(ulOsagaiak);
+    ul.appendChild(li);
 
-  // Imagen
-  const img = document.createElement("img");
-  img.src = elementua.irudia || "../../img/logotxikia.jpeg";
-  img.alt = elementua.izena;
-  eIrudia.appendChild(img);
+  });
 
-  // Movimientos
-  const ulMugimenduak = document.createElement("ul");
-  const liMu = document.createElement("li");
-  liMu.textContent = `Mugimenduak: ${elementua.mugimenduak || "Ez dago mugimendurik"}`;
-  ulMugimenduak.appendChild(liMu);
-  eMugimenduak.appendChild(ulMugimenduak);
+  eOsagaiak.appendChild(ul);
 
-  // Si el usuario es admin, también puede ir a editatu desde la pantalla ikusi
+  // Irudia (Baliabideak bakarrik)
+  if (config.imagen) {
+    const img = document.createElement("img");
+
+    img.src = elementua.irudia || "../../img/logotxikia.jpeg";
+    img.alt = elementua.izena || "Baliabidea";
+
+    eIrudia.appendChild(img);
+  }
+
+  // Mugimenduak
+  if (elementua.mugimenduak) {
+    const ulMugimenduak = document.createElement("ul");
+    const li = document.createElement("li");
+
+    li.textContent = `Mugimenduak: ${elementua.mugimenduak}`;
+
+    ulMugimenduak.appendChild(li);
+    eMugimenduak.appendChild(ulMugimenduak);
+  }
+
+  // Admin editatzeko botoia
   const rol = sessionStorage.getItem("rol");
+
   if (rol === "admin") {
     const eBotoiak = document.getElementById("elementuBotoiak");
+
     if (eBotoiak && !document.getElementById("btnIkusiEditatu")) {
       const btnEditatu = document.createElement("button");
+
       btnEditatu.id = "btnIkusiEditatu";
       btnEditatu.type = "button";
       btnEditatu.className = "btn-atzera";
       btnEditatu.textContent = "Editatu";
+
       btnEditatu.addEventListener("click", () => {
         window.location.href = "../admin/editatu.html";
       });
+
       eBotoiak.appendChild(btnEditatu);
     }
   }
