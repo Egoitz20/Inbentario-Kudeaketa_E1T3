@@ -60,13 +60,13 @@ function navbar() {
   liGe.appendChild(aGe);
   ul.appendChild(liGe);
 
-  // Mugimenduak
-  let liM = document.createElement("li");
-  let aM = document.createElement("a");
-  aM.textContent = "Mugimenduak";
-  aM.href = basePath + "/pages/mugimenduak.html";
-  liM.appendChild(aM);
-  ul.appendChild(liM);
+  // // Mugimenduak
+  // let liM = document.createElement("li");
+  // let aM = document.createElement("a");
+  // aM.textContent = "Mugimenduak";
+  // aM.href = basePath + "/pages/mugimenduak.html";
+  // liM.appendChild(aM);
+  // ul.appendChild(liM);
 
   let divUser = document.createElement("div");
   let user = document.createElement("img");

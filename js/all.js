@@ -405,7 +405,7 @@ if (document.getElementById("elementuTituluaEditatu")) {
 // *************************************************************** IKUSI JS *********************************************************************************
 // **********************************************************************************************************************************************************
 
-function elementuaErrekuperatu() {
+async function elementuaErrekuperatu() {
   const datuakString = sessionStorage.getItem("aukeratutakoElementua");
   const mota = sessionStorage.getItem("elementuMota");
 
@@ -457,6 +457,38 @@ function elementuaErrekuperatu() {
 
   if (!config) return;
 
+  console.log("Elemento seleccionado:", elementua);
+  console.log("ID del recurso:", elementua.id);
+  console.log("Movimientos:", elementua.mugimenduak);
+
+  // HISTORIAL DE MOVIMIENTOS DE LOS RECURSOS
+  if (mota === "baliabideak") {
+
+    const gailuak = await elementuakHartu("gailuak.php");
+
+    const gailuakBaliabide = Array.isArray(gailuak)
+      ? gailuak.filter(gailua =>
+        Number(gailua.baliabideId) === Number(elementua.id)
+      )
+      : [];
+
+    const mugimenduZerrendak = await Promise.all(
+
+      gailuakBaliabide.map(gailua =>
+        elementuakHartu(
+          `mugimenduak.php?gailuId=${gailua.id}`
+        )
+      )
+
+    );
+
+    const mugimenduGuztiak = mugimenduZerrendak
+      .filter(zerrenda => Array.isArray(zerrenda))
+      .flat();
+
+    mugimenduakErakutsi(mugimenduGuztiak);
+  }
+
   // Izenburua
   const h1 = document.createElement("h1");
   h1.textContent = config.titulo || "Elementua";
@@ -489,17 +521,6 @@ function elementuaErrekuperatu() {
     eIrudia.appendChild(img);
   }
 
-  // Mugimenduak
-  if (elementua.mugimenduak) {
-    const ulMugimenduak = document.createElement("ul");
-    const li = document.createElement("li");
-
-    li.textContent = `Mugimenduak: ${elementua.mugimenduak}`;
-
-    ulMugimenduak.appendChild(li);
-    eMugimenduak.appendChild(ulMugimenduak);
-  }
-
   // Admin editatzeko botoia
   const rol = sessionStorage.getItem("rol");
 
@@ -521,6 +542,69 @@ function elementuaErrekuperatu() {
       eBotoiak.appendChild(btnEditatu);
     }
   }
+}
+
+function mugimenduakErakutsi(mugimenduak) {
+  const kontenedorea = document.getElementById(
+    "baliabideMugimenduenHistoria"
+  );
+
+  if (!kontenedorea) return;
+
+  kontenedorea.innerHTML = "";
+
+  const titulua = document.createElement("h2");
+  titulua.textContent = "Mugimenduen historikoa";
+
+  kontenedorea.appendChild(titulua);
+
+  if (!mugimenduak || mugimenduak.length === 0) {
+    const p = document.createElement("p");
+    p.textContent = "Ez dago mugimendurik baliabide honetan.";
+
+    kontenedorea.appendChild(p);
+    return;
+  }
+
+  const taula = document.createElement("table");
+
+  const thead = document.createElement("thead");
+  const goiburua = document.createElement("tr");
+
+  ["Gela ID", "Gailu ID", "Hasiera data"].forEach(izena => {
+    const th = document.createElement("th");
+    th.textContent = izena;
+    goiburua.appendChild(th);
+  });
+
+  thead.appendChild(goiburua);
+  taula.appendChild(thead);
+
+  const tbody = document.createElement("tbody");
+
+  mugimenduak.forEach(mugimendua => {
+
+    const tr = document.createElement("tr");
+
+    [
+      mugimendua.gelaId,
+      mugimendua.gailuId,
+      mugimendua.hasieraData
+    ].forEach(valor => {
+
+      const td = document.createElement("td");
+      td.textContent = valor ?? "Ez dago";
+
+      tr.appendChild(td);
+
+    });
+
+    tbody.appendChild(tr);
+
+  });
+
+  taula.appendChild(tbody);
+  kontenedorea.appendChild(taula);
 }
 
 // **********************************************************************************************************************************************************
@@ -882,111 +966,110 @@ const konfigurazioa = {
 };
 
 // Formulario mota
-const parametros = new URLSearchParams(window.location.search);
-
-const tipo = parametros.get("tipo");
-
-const config = konfigurazioa[tipo];
-
 const formularioa = document.getElementById("sortuFormularioaS");
-
 const titulua = document.getElementById("sortuIzenburua");
 
-if (!config) {
-  titulua.textContent = "Errorea";
-  formularioa.innerHTML =
-    "<p>Ez da formulario mota zuzena.</p>";
+// Ejecutar únicamente en la página de creación
+if (formularioa && titulua) {
 
-} else {
+  const parametros = new URLSearchParams(window.location.search);
+  const tipo = parametros.get("tipo");
 
-  titulua.textContent = config.izenburua;
+  const config = konfigurazioa[tipo];
 
-  // GENERAR LOS CAMPOS DINÁMICAMENTE
-  config.campos.forEach(campo => {
-    const div = document.createElement("div");
-    div.className = "sortuInput";
+  if (!config) {
 
-    // LABEL
-    const label = document.createElement("label");
-    label.htmlFor = campo.id;
-    label.textContent = campo.label;
+    titulua.textContent = "Errorea";
+    formularioa.innerHTML =
+      "<p>Ez da formulario mota zuzena.</p>";
 
-    // INPUT
-    let input;
-    if (campo.type === "textarea") {
-      input = document.createElement("textarea");
+  } else {
 
-    } else if (campo.type === "select") {
-      input = document.createElement("select");
-      // Primera opción
-      const opcionInicial = document.createElement("option");
-      opcionInicial.value = "";
-      opcionInicial.textContent = "Aukeratu";
-      input.appendChild(opcionInicial);
+    titulua.textContent = config.izenburua;
 
-      // Opciones del select
-      campo.options.forEach(([valor, texto]) => {
-        const opcion = document.createElement("option");
-        opcion.value = valor;
-        opcion.textContent = texto;
-        input.appendChild(opcion);
-      });
-
-    } else {
-      input = document.createElement("input");
-      input.type = campo.type;
-    }
-
-    input.id = campo.id;
-    input.name = campo.id;
-    input.required = campo.required ?? false;
-
-    // Añadir elementos al formulario
-    div.appendChild(label);
-    div.appendChild(input);
-    formularioa.appendChild(div);
-  });
-
-  // ENVIAR EL FORMULARIO
-  formularioa.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    // Validar campos obligatorios
-    if (!formularioa.reportValidity()) {
-      return;
-    }
-
-    // Recoger los datos
-    const datos = {};
-
+    // GENERAR LOS CAMPOS DINÁMICAMENTE
     config.campos.forEach(campo => {
 
-      const input = document.getElementById(campo.id);
-      let valor = input.value.trim();
+      const div = document.createElement("div");
+      div.className = "sortuInput";
 
-      // Convertir números
-      if (campo.type === "number" && valor !== "") {
-        valor = Number(valor);
+      // LABEL
+      const label = document.createElement("label");
+      label.htmlFor = campo.id;
+      label.textContent = campo.label;
+
+      // INPUT
+      let input;
+
+      if (campo.type === "textarea") {
+
+        input = document.createElement("textarea");
+
+      } else if (campo.type === "select") {
+
+        input = document.createElement("select");
+
+        const opcionInicial = document.createElement("option");
+        opcionInicial.value = "";
+        opcionInicial.textContent = "Aukeratu";
+        input.appendChild(opcionInicial);
+
+        campo.options.forEach(([valor, texto]) => {
+          const opcion = document.createElement("option");
+          opcion.value = valor;
+          opcion.textContent = texto;
+          input.appendChild(opcion);
+        });
+
+      } else {
+
+        input = document.createElement("input");
+        input.type = campo.type;
+
       }
 
-      // No enviar campos opcionales vacíos
-      if (valor !== "") {
-        datos[campo.id] = valor;
-      }
+      input.id = campo.id;
+      input.name = campo.id;
+      input.required = campo.required ?? false;
+
+      div.appendChild(label);
+      div.appendChild(input);
+      formularioa.appendChild(div);
 
     });
 
-    // Endpoint correspondiente
-    const endpoint = config.endpoint;
+    // ENVIAR EL FORMULARIO
+    formularioa.addEventListener("submit", async (e) => {
 
-    // Página a la que volver después de crear
-    const paginaRetorno = "../" + tipo + ".html";
+      e.preventDefault();
 
-    // console.log("Datos enviados:", datos);
-    // console.log("Endpoint:", endpoint);
+      if (!formularioa.reportValidity()) {
+        return;
+      }
 
-    // Crear elemento
-    await sortuBtn(endpoint, datos, paginaRetorno);
-  });
+      const datos = {};
 
+      config.campos.forEach(campo => {
+
+        const input = document.getElementById(campo.id);
+        let valor = input.value.trim();
+
+        if (campo.type === "number" && valor !== "") {
+          valor = Number(valor);
+        }
+
+        if (valor !== "") {
+          datos[campo.id] = valor;
+        }
+
+      });
+
+      const endpoint = config.endpoint;
+      const paginaRetorno = "../" + tipo + ".html";
+
+      await sortuBtn(endpoint, datos, paginaRetorno);
+
+    });
+
+  }
 }
