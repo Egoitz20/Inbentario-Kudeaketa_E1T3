@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /**
@@ -12,15 +13,22 @@ class Gailua
 {
     private const EGOERAK = ['Operatiboa', 'Matxuratua', 'Baja'];
 
-    public function __construct(private PDO $pdo)
-    {
-    }
+    public function __construct(private PDO $pdo) {}
 
     /** READ: devuelve todos los equipos. */
     public function guztiak(): array
     {
         return $this->pdo->query(
-            'SELECT id, baliabideId, etiketa, erosketaData, egoera FROM gailuak ORDER BY id'
+            'SELECT
+            g.id,
+            g.baliabideId,
+            g.etiketa,
+            g.erosketaData,
+            g.egoera,
+            b.kategoriaId
+         FROM gailuak g
+         LEFT JOIN baliabideak b ON b.id = g.baliabideId
+         ORDER BY g.id'
         )->fetchAll();
     }
 
@@ -28,9 +36,20 @@ class Gailua
     public function bilatu(int $id): ?array
     {
         $st = $this->pdo->prepare(
-            'SELECT id, baliabideId, etiketa, erosketaData, egoera FROM gailuak WHERE id = ?'
+            'SELECT
+            g.id,
+            g.baliabideId,
+            g.etiketa,
+            g.erosketaData,
+            g.egoera,
+            b.kategoriaId
+         FROM gailuak g
+         LEFT JOIN baliabideak b ON b.id = g.baliabideId
+         WHERE g.id = ?'
         );
+
         $st->execute([$id]);
+
         return $st->fetch() ?: null;
     }
 

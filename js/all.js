@@ -175,13 +175,17 @@ function sortuTxartelaElementua(elementua) {
 
   const img = document.createElement("img");
   img.src = irudiaElementoLortu(elementua);
-  img.alt = elementua.izena || "Elementua";
+  img.alt = elementua.izena || elementua.etiketa || "Elementua";
+
+console.log("GAILUA:", elementua);
+console.log("KATEGORIA ID:", elementua.kategoriaId);
+console.log("IMAGEN:", irudiaElementoLortu(elementua));
 
   const hr = document.createElement("hr");
 
   const p = document.createElement("p");
   p.classList.add("elementuIzena");
-  p.textContent = elementua.izena;
+  p.textContent = elementua.izena || elementua.etiketa || "Elementua";
 
   const btn = document.createElement("input");
   btn.type = "button";
