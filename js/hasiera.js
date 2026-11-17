@@ -1,14 +1,30 @@
 "use strict";
 
+// --- CALCULAR LA RUTA BASE GLOBAL ---
+// Al estar fuera de las funciones, se calcula una sola vez al cargar el script
+const scriptPath = document.currentScript
+  ? document.currentScript.src
+  : window.location.pathname;
+const jsIndex = scriptPath.indexOf("/js/");
+let basePath = "";
+
+if (jsIndex !== -1) {
+  basePath = scriptPath.substring(0, jsIndex);
+} else {
+  basePath = window.location.origin;
+}
+// ------------------------------------
+
 function navbar() {
   let header = document.getElementById("navbar");
+  if (!header) return; // Buena práctica por si no existe el div
 
   let ul = document.createElement("ul");
   ul.classList.add("nav");
 
   let divLogo = document.createElement("div");
   let logo = document.createElement("img");
-  logo.src = window.location.origin + "/img/logo.png";
+  logo.src = basePath + "/img/logo.png"; // Usa basePath global
   divLogo.appendChild(logo);
   ul.appendChild(divLogo);
 
@@ -16,7 +32,7 @@ function navbar() {
   let liB = document.createElement("li");
   let aB = document.createElement("a");
   aB.textContent = "Baliabideak";
-  aB.href = window.location.origin + "/pages/baliabideak.html";
+  aB.href = basePath + "/pages/baliabideak.html";
   liB.appendChild(aB);
   ul.appendChild(liB);
 
@@ -24,7 +40,7 @@ function navbar() {
   let liK = document.createElement("li");
   let aK = document.createElement("a");
   aK.textContent = "Kategoriak";
-  aK.href = window.location.origin + "/pages/kategoriak.html";
+  aK.href = basePath + "/pages/kategoriak.html";
   liK.appendChild(aK);
   ul.appendChild(liK);
 
@@ -32,7 +48,7 @@ function navbar() {
   let liGa = document.createElement("li");
   let aGa = document.createElement("a");
   aGa.textContent = "Gailuak";
-  aGa.href = window.location.origin + "/pages/gailuak.html";
+  aGa.href = basePath + "/pages/gailuak.html";
   liGa.appendChild(aGa);
   ul.appendChild(liGa);
 
@@ -40,7 +56,7 @@ function navbar() {
   let liGe = document.createElement("li");
   let aGe = document.createElement("a");
   aGe.textContent = "Gelak";
-  aGe.href = window.location.origin + "/pages/gelak.html";
+  aGe.href = basePath + "/pages/gelak.html";
   liGe.appendChild(aGe);
   ul.appendChild(liGe);
 
@@ -48,13 +64,13 @@ function navbar() {
   let liM = document.createElement("li");
   let aM = document.createElement("a");
   aM.textContent = "Mugimenduak";
-  aM.href = window.location.origin + "/pages/mugimenduak.html";
+  aM.href = basePath + "/pages/mugimenduak.html";
   liM.appendChild(aM);
   ul.appendChild(liM);
 
   let divUser = document.createElement("div");
   let user = document.createElement("img");
-  user.src = window.location.origin + "/img/user.svg";
+  user.src = basePath + "/img/user.svg"; // Usa basePath global
   user.id = "erabPantaila";
   user.addEventListener("click", erabPantaila);
 
@@ -68,10 +84,11 @@ async function erabPantaila() {
   try {
     let rola = sessionStorage.getItem("rol");
 
+    // Usamos basePath para redirigir correctamente desde cualquier ubicación
     if (rola === "admin") {
-      window.location.href = "../pages/admin/adminPantaila.html";
+      window.location.href = basePath + "/pages/admin/adminPantaila.html";
     } else {
-      window.location.href = "../pages/userPantaila.html";
+      window.location.href = basePath + "/pages/userPantaila.html";
     }
   } catch (error) {
     console.log(error);
@@ -87,14 +104,16 @@ function footer() {
 
   let divLogo = document.createElement("div");
   let logo = document.createElement("img");
-  logo.src = "../../img/logo.png";
+  logo.src = basePath + "/img/logo.png"; // Usa basePath global
   divLogo.appendChild(logo);
   footer.appendChild(divLogo);
 
   let p = document.createElement("p");
-  p.textContent = "INFORMATIKA SANTURTZI MINTEGIA"
+  p.textContent = "INFORMATIKA SANTURTZI MINTEGIA";
   footer.appendChild(p);
 }
 
-navbar();
-footer();
+document.addEventListener("DOMContentLoaded", () => {
+  navbar();
+  footer();
+});
