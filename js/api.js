@@ -128,8 +128,8 @@ export async function elementuaEguneratu(rutaPHP, id, datuak) {
       return null;
     }
 
-    if (!respuesta.ok) {
-      console.log(respuesta);
+    if (!erantzuna.ok) {
+      console.log(erantzuna);
       throw new Error("Errorea zerbitzariarekin konektatzean.");
     }
 
