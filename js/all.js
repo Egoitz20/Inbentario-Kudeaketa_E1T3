@@ -793,7 +793,7 @@ function elementuaEditatuHasieratu() {
           JSON.stringify(elementuEguneratua),
         );
         alert("Aldaketak ondo gorde dira!");
-        window.location.href = "../gestion/ikusi.html";
+        window.location.href = "../baliabideak.html";
       }
     });
 
