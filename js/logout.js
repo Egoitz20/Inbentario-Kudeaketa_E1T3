@@ -1,13 +1,15 @@
 'use strict'
 
+const projectBase = window.location.pathname.includes("/pages/")
+    ? window.location.pathname.split("/pages/")[0]
+    : window.location.pathname.substring(0, window.location.pathname.lastIndexOf("/"));
+
 document.getElementById("logout").addEventListener("click", logout);
 
 async function logout() {
     try {
         sessionStorage.removeItem("rol");
-
-        const estaEnAdmin = window.location.pathname.includes("/pages/admin/");
-        window.location.href = estaEnAdmin ? "../../index.html" : "../index.html";
+        window.location.href = `${window.location.origin}${projectBase}/index.html`;
 
     } catch (error) {
         console.log(error);
@@ -21,11 +23,7 @@ async function atzera() {
     try {
         let rola = sessionStorage.getItem("rol");
 
-        if (rola === "admin") {
-            window.location.href = "../baliabideak.html";
-        } else {
-            window.location.href = "../pages/baliabideak.html";
-        }
+        window.location.href = `${window.location.origin}${projectBase}/pages/baliabideak.html`;
 
     } catch (error) {
         console.log(error);
